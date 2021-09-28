@@ -136,12 +136,12 @@
                </padding>
             </Label>
             <DatePicker />
-            <CheckBox alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Myynnissä">
+            <CheckBox alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Myyty">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </CheckBox>
-            <Label text="Tuotekuvaus">
+            <Label text="Tuotekategoria">
                <padding>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -149,11 +149,7 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextArea prefHeight="254.0" prefWidth="170.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </TextArea>
+            <ListView prefHeight="243.0" prefWidth="168.0" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -166,24 +162,12 @@
    <right>
       <VBox prefHeight="468.0" prefWidth="278.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Tuotekategoria">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
+            <Label text="Tuotekuvaus">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <Label text="Pääkategoria">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Label>
-            <ListView prefHeight="423.0" prefWidth="258.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ListView>
+            <TextArea prefHeight="451.0" prefWidth="258.0" text="Hyväkuntoinen, punainen  potkukelkka, &#10;joka nyt valmiina uuteen kotiin. " />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -201,7 +185,7 @@
          <left>
             <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="274.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Uusi tuote">
+                  <Button mnemonicParsing="false" text="Lisää tuote">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
@@ -212,7 +196,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button defaultButton="true" mnemonicParsing="false" text="Tallenna">
+                  <Button defaultButton="true" mnemonicParsing="false" text="Muokkaa tuotetta">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
@@ -240,7 +224,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Button>
-                  <Button mnemonicParsing="false" text="Uusi kategoria">
+                  <Button mnemonicParsing="false" text="Peruuta">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
