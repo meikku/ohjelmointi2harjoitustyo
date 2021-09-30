@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -43,11 +44,29 @@
                   <Insets />
                </VBox.margin>
             </GridPane>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox prefHeight="400.0" prefWidth="100.0" spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label text="Myynnin aloituspäivä" />
                   <DatePicker />
-                  <CheckBox mnemonicParsing="false" text="Myynnissä" />
+                  <CheckBox mnemonicParsing="false" text="Myyty" />
+                  <Label text="Tuotekategoria" />
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                    <content>
+                      <VBox spacing="5.0">
+											<children>
+												<CheckBox mnemonicParsing="false" text="kulkuvälineet" />
+												<CheckBox mnemonicParsing="false" text="sisustus" />
+												<CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="163.0" text="vaatteet" />
+												<CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="156.0" text="kodin käyttötavara" />
+												<CheckBox mnemonicParsing="false" text="eläintarvikkeet" />
+												<CheckBox mnemonicParsing="false" text="vapaa-aika ja harrastukset" />
+											</children>
+											<padding>
+												<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+											</padding>
+										</VBox>
+                    </content>
+                  </ScrollPane>
                   <Label alignment="TOP_LEFT" text="Tuotekuvaus" />
                   <TextArea text="Potkukelkka, mummon vanha. Punainen, tukeva, aikuisten kokoa." />
                   <TextField style="-fx-background-color: red;" text="Hinta: ilmoita euroina" />
@@ -70,7 +89,7 @@
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Poista" />
+            <Button mnemonicParsing="false" text="Peruuta" />
          </children>
          <opaqueInsets>
             <Insets />
