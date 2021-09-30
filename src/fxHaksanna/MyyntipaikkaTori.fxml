@@ -27,17 +27,22 @@
         <menus>
           <Menu mnemonicParsing="false" text="Tiedosto">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Vaihda myyntipaikkaa" />
+                  <MenuItem mnemonicParsing="false" text="Myyntiraportti" />
+                  <MenuItem mnemonicParsing="false" text="Lopeta" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Muokkaa">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" text="Lisää tuote" />
+                  <MenuItem mnemonicParsing="false" text="Muokkaa tuotetta" />
+                  <MenuItem mnemonicParsing="false" text="Lisää kategoria" />
+                  <MenuItem mnemonicParsing="false" text="Muokkaa kategoriaa" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Info">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Kategorioiden kuvaukset" />
             </items>
           </Menu>
         </menus>
