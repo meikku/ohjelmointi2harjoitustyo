@@ -3,12 +3,13 @@ package fxHaksanna;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import javafx.fxml.FXML;
+
 /**
  * @author meikkupyrhonen
- * @version 16.9.2021
+ * @version 13.10.2021
  *
  */
-public class HaksannaGUIController {
+public class MyyntipaikkaToriController {
 
 
     @FXML void handleLisaaKategoria() {
@@ -34,3 +35,5 @@ public class HaksannaGUIController {
         Dialogs.showMessageDialog("Lisätään tuote. Ei toimi vielä.");
     }
 }
+
+
