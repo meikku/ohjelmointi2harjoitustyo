@@ -1,6 +1,5 @@
 package fxHaksanna;
 
-import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import javafx.fxml.FXML;
 /**
@@ -19,18 +18,18 @@ public class HaksannaGUIController {
         muokkaaTuote();
     }
 
-    @FXML void handlelLisaaTuote() {
+    @FXML void handleLisaaTuote() {
         lisaaTuote();
     }
 // -----------------------------
     private void lisaaKategoria() {
-        Dialogs.showMessageDialog("Lisätään kategoria. Ei toimi vielä.");
+        ModalController.showModal(HaksannaGUIController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Muokkaa kategorioita", null, "");
     }
     
     private void muokkaaTuote() {
         ModalController.showModal(HaksannaGUIController.class.getResource("MuokkaaTuotetta.fxml"), "Muokkaa tuotetta", null, "");
     }
     private void lisaaTuote() {
-        Dialogs.showMessageDialog("Lisätään tuote. Ei toimi vielä.");
+        ModalController.showModal(HaksannaGUIController.class.getResource("LisaaTuote.fxml"), "Lisää tuote", null, "");
     }
 }

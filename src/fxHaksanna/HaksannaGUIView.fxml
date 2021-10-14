@@ -190,7 +190,7 @@
          <left>
             <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="274.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handlelLisaaTuote" text="Lisää tuote">
+                  <Button mnemonicParsing="false" onAction="#handleLisaaTuote" text="Lisää tuote">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

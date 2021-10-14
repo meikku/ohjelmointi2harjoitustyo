@@ -32,7 +32,7 @@ public class MyyntipaikkaToriController {
         ModalController.showModal(HaksannaGUIController.class.getResource("MuokkaaTuotetta.fxml"), "Muokkaa tuotetta", null, "");
     }
     private void lisaaTuote() {
-        Dialogs.showMessageDialog("Lisätään tuote. Ei toimi vielä.");
+        ModalController.showModal(HaksannaGUIController.class.getResource("LisaaTuote.fxml"), "Lisää tuote", null, "");
     }
 }
 
