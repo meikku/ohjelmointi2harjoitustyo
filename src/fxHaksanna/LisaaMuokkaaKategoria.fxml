@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.mit.fxgui.ModalController">
    <bottom>
       <BorderPane prefWidth="600.0" BorderPane.alignment="CENTER">
          <left>
-            <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false" text="Tallenna" BorderPane.alignment="CENTER">
+            <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false" onAction="#handleDefaultOK" text="Tallenna" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
@@ -26,7 +26,7 @@
             </Button>
          </left>
          <center>
-            <Button alignment="CENTER_RIGHT" cancelButton="true" mnemonicParsing="false" text="Peruuta" BorderPane.alignment="CENTER_LEFT">
+            <Button cancelButton="true" alignment="CENTER_RIGHT" onAction="#handleDefaultCancel" mnemonicParsing="false" text="Peruuta" BorderPane.alignment="CENTER_LEFT">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
@@ -37,27 +37,6 @@
          </center>
       </BorderPane>
    </bottom>
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Tiedosto">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Muokkaa">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Info">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
    <left>
       <VBox prefHeight="270.0" prefWidth="333.0" BorderPane.alignment="CENTER">
          <children>

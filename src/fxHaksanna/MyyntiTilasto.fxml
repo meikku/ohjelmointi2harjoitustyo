@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.mit.fxgui.ModalController">
+   <center>
       <TextArea prefHeight="600.0" text="Myyntitilasto&#10;------------------------------------&#10;------------------------------------&#10;Myydyt tuotteet:&#10;&#10;id: 3&#10;tuotteen nimi: Villasukat&#10;hinta: 10€&#10;kunto: erinomainen&#10;&#10;id: 7&#10;tuotteen nimi: lastenistuin polkupyörään&#10;hinta: 8€&#10;kunto: hyvä&#10;------------------------------------&#10;Myydyistä tuottoa yhteensä: 18€&#10;&#10;------------------------------------&#10;------------------------------------&#10;Myynnissä olevat tuotteet :&#10;&#10;id: 2&#10;tuotteen nimi: cd-levyjä&#10;hinta: 15€&#10;kunto: hyvä&#10;kategoria: vapaa-aika ja harrastukset / musiikki&#10;&#10;------------------------------------&#10;------------------------------------&#10;Myynnistä poistetut tuotteet:&#10;&#10;id: 8&#10;tuotteen nimi: nojatuoli&#10;hinta: 40€&#10;kunto: hyvä&#10;kategoria: kodin sisustus / huonekalut&#10;------------------------------------&#10;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
       </TextArea>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleDefaultOK" text="Tulosta" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleDefaultCancel" text="Peruuta" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
    </bottom>
 </BorderPane>

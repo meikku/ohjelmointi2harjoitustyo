@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxHaksanna.LisaaTuoteController">
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.mit.fxgui.ModalController">
 	<center>
 		<VBox BorderPane.alignment="CENTER">
 			<children>
@@ -84,12 +84,12 @@
 	<bottom>
 		<HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
 			<children>
-				<Button mnemonicParsing="false" text="Tallenna">
+				<Button defaultButton="true" mnemonicParsing="false" onAction="#handleDefaultOK" text="Tallenna">
 					<HBox.margin>
 						<Insets />
 					</HBox.margin>
 				</Button>
-				<Button mnemonicParsing="false" text="Peruuta" />
+				<Button cancelButton="true" mnemonicParsing="false" onAction="#handleDefaultCancel" text="Peruuta" />
 			</children>
 			<opaqueInsets>
 				<Insets />
