@@ -6,6 +6,9 @@ package kirppis;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+
+import static kanta.PvmTarkistus.*;
+
 /**
  * tietää tuotteen tiedot (hinta, kunto, myynnin  
  *   aloituspvm...)                                
@@ -25,8 +28,8 @@ public class Tuote {
     private String nimi = "";
     private double hinta = 0;
     private String kunto = "";
-    // private Pvm myynninAlkuPvm; ??
-    private boolean myyty = false;
+    private String myynninAlkuPvm = "000000";
+    boolean myyty = false;
     private String kuvaus = "";
     // private String kategoria; ??
 
@@ -39,7 +42,8 @@ public class Tuote {
     public void tulosta(PrintStream out) {
         out.println(String.format("%03d", tunnusNro) + " " + nimi + " "
                 + String.format("%4.2f", hinta) + "€");
-        out.print("Tuotteen kunto: " + kunto);
+        out.println("Tuotteen kunto: " + kunto);
+        out.println("Tuote laitettu myyntiin: " + myynninAlkuPvm);
         out.println("Myyty? : " + myyty + " kuvaus: " + kuvaus);
         //
     }
@@ -84,8 +88,33 @@ public class Tuote {
     public int getTunnusNro() {
         return tunnusNro;
     }
-
-
+    
+    /**
+     * Arvotaan satunnainen kokonaisluku välille (ala, yla)
+     * @param ala arvonnan alaraja
+     * @param yla arvonnan yläraja
+     * @return satunnainne luku väliltä [ala, yla}
+     */
+    public static int rand(int ala, int yla) {
+        double n = (yla-ala)*Math.random() + ala;
+        return (int)Math.round(n);
+    }
+    
+    /**
+     *  Täytetään tuotteen tiedot
+     */
+    public void taytaTuoteTiedoilla() {
+        nimi = "potkukelkka " + rand(1000, 9999);
+        hinta = 40.00;
+        kunto = "hyvä";
+        myynninAlkuPvm = arvoPvm();
+        myyty = false;
+        kuvaus = "punainen, tukeva";
+        // kategoria = "kulkuvälineet";
+        
+ 
+        
+    }
     /**
      * @param args ei käytössä
      */
@@ -97,11 +126,11 @@ public class Tuote {
         kesaMekko.rekisteroi();
 
         potkuKelkka.tulosta(System.out);
-        // potkuKelkka.taytaTuoteTiedoilla();
+        potkuKelkka.taytaTuoteTiedoilla();
         potkuKelkka.tulosta(System.out);
 
         kesaMekko.tulosta(System.out);
-        // kesaMekko.taytaTuoteTiedoilla();
+        kesaMekko.taytaTuoteTiedoilla();
         kesaMekko.tulosta(System.out);
     }
 
