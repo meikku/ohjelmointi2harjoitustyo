@@ -120,18 +120,18 @@ public class Tuote {
      */
     public static void main(String[] args) {
         Tuote potkuKelkka = new Tuote();
-        Tuote kesaMekko = new Tuote();
+        Tuote potkuKelkka2 = new Tuote();
 
         potkuKelkka.rekisteroi();
-        kesaMekko.rekisteroi();
+        potkuKelkka2.rekisteroi();
 
         potkuKelkka.tulosta(System.out);
         potkuKelkka.taytaTuoteTiedoilla();
         potkuKelkka.tulosta(System.out);
 
-        kesaMekko.tulosta(System.out);
-        kesaMekko.taytaTuoteTiedoilla();
-        kesaMekko.tulosta(System.out);
+        potkuKelkka2.tulosta(System.out);
+        potkuKelkka2.taytaTuoteTiedoilla();
+        potkuKelkka2.tulosta(System.out);
     }
 
 }
