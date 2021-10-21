@@ -99,7 +99,6 @@ public class Tuotteet {
             tuotteet.lisaa(potkuKelkka2);
             tuotteet.lisaa(potkuKelkka2);
         } catch (SailoException e) {
-            // TODO Auto-generated catch block
             System.err.println(e.getMessage());
         }
         

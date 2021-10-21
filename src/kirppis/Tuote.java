@@ -28,6 +28,7 @@ public class Tuote {
     private String nimi = "";
     private double hinta = 0;
     private String kunto = "";
+   
     private String myynninAlkuPvm = "000000";
     boolean myyty = false;
     private String kuvaus = "";
