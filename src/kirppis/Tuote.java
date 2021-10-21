@@ -135,4 +135,13 @@ public class Tuote {
         potkuKelkka2.tulosta(System.out);
     }
 
+
+    /**
+     * @return tuotteen nimi
+     */
+    public String getNimi() {
+        
+        return nimi;
+    }
+
 }

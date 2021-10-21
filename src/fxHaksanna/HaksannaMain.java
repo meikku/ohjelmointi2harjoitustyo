@@ -19,7 +19,7 @@ public class HaksannaMain extends Application {
         try {
             FXMLLoader ldr = new FXMLLoader(getClass().getResource("HaksannaGUIView.fxml"));
             final Pane root = ldr.load();
-            final HaksannaGUIController haksannaCtrl = (HaksannaGUIController) ldr.getController();
+            final HaksannaGUIController haksannaCtrl = (HaksannaGUIController)ldr.getController();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("haksanna.css").toExternalForm());
             primaryStage.setScene(scene);
@@ -30,9 +30,11 @@ public class HaksannaMain extends Application {
             
             
             primaryStage.show();
+            
         } catch(Exception e) {
             e.printStackTrace();
         }
+        
     }
 
     /**
