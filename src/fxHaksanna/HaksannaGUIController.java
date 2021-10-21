@@ -1,9 +1,19 @@
 package fxHaksanna;
 
+import java.io.PrintStream;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import kirppis.MyyntiPaikka;
 import kirppis.SailoException;
 import kirppis.Tuote;
@@ -12,8 +22,12 @@ import kirppis.Tuote;
  * @version 16.9.2021
  *
  */
-public class HaksannaGUIController {
+public class HaksannaGUIController implements Initializable{
 
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        alusta();
+    }
 
     @FXML void handleLisaaKategoria() {
         lisaaKategoria();
@@ -36,9 +50,21 @@ public class HaksannaGUIController {
         naytaKategoriaKuvaukset();
     }
     @FXML private ListChooser<Tuote> chooserTuotteet;
+    @FXML private ScrollPane panelTuote;
     
 // -----------------------------
     private MyyntiPaikka myyntiPaikka;
+    
+    private TextArea areaTuote = new TextArea(); // TODO: poista myöhemmin
+    
+    private void alusta() {
+        panelTuote.setContent(areaTuote);
+        areaTuote.setFont(new Font("Courier New", 12));
+        panelTuote.setFitToHeight(true);
+        chooserTuotteet.clear();
+        chooserTuotteet.addSelectionListener(e -> naytaTuote());
+        
+    }
     
     private void lisaaKategoria() {
         ModalController.showModal(HaksannaGUIController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Muokkaa kategorioita", null, "");
@@ -61,6 +87,16 @@ public class HaksannaGUIController {
         Dialogs.showMessageDialog("Kategorioiden kuvaukset tulossa pian...");
     }
     
+    private void naytaTuote() {
+        Tuote tuoteKohdalla = chooserTuotteet.getSelectedObject();
+        
+        if (tuoteKohdalla == null) return;
+        
+        areaTuote.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaTuote)) {
+                tuoteKohdalla.tulosta(os);
+        }
+    }
     private void hae(int tnro) {
         chooserTuotteet.clear();
         
