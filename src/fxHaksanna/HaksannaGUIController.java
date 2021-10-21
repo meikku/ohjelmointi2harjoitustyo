@@ -3,6 +3,7 @@ package fxHaksanna;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import javafx.fxml.FXML;
+import kirppis.MyyntiPaikka;
 /**
  * @author meikkupyrhonen
  * @version 16.9.2021
@@ -33,6 +34,8 @@ public class HaksannaGUIController {
     }
     
 // -----------------------------
+    private MyyntiPaikka myyntiPaikka;
+    
     private void lisaaKategoria() {
         ModalController.showModal(HaksannaGUIController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Muokkaa kategorioita", null, "");
     }
@@ -51,6 +54,14 @@ public class HaksannaGUIController {
     }
     private void naytaKategoriaKuvaukset() {
         Dialogs.showMessageDialog("Kategorioiden kuvaukset tulossa pian...");
+    }
+
+    /**
+     * Asetetetaan käytettävä myyntipaikka
+     * @param myyntiPaikka jota käytetään
+     */
+    public void setMyyntiPaikka(MyyntiPaikka myyntiPaikka) {
+        this.myyntiPaikka = myyntiPaikka;
     }
     
 }

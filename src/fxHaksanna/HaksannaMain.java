@@ -2,6 +2,7 @@ package fxHaksanna;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import kirppis.MyyntiPaikka;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +19,16 @@ public class HaksannaMain extends Application {
         try {
             FXMLLoader ldr = new FXMLLoader(getClass().getResource("HaksannaGUIView.fxml"));
             final Pane root = ldr.load();
-            //final HaksannaGUIController haksannaCtrl = (HaksannaGUIController) ldr.getController();
+            final HaksannaGUIController haksannaCtrl = (HaksannaGUIController) ldr.getController();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("haksanna.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Haksanna");
+            primaryStage.setTitle("Myyntipaikka");
+            
+            MyyntiPaikka myyntiPaikka = new MyyntiPaikka();
+            haksannaCtrl.setMyyntiPaikka(myyntiPaikka);
+            
+            
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
