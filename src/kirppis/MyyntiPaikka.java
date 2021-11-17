@@ -2,7 +2,8 @@
  * 
  */
 package kirppis;
-    
+
+
 
 /**
  *
@@ -13,7 +14,9 @@ package kirppis;
  *
  */
 public class MyyntiPaikka {
-    private Tuotteet tuotteet = new Tuotteet();
+    private final Tuotteet tuotteet = new Tuotteet();
+    private final Kategoriat kategoriat = new Kategoriat();
+    // private final Liitokset liitokset = new Liitokset();
     
     /**
      * Lisätään uusi jäsen
@@ -23,6 +26,16 @@ public class MyyntiPaikka {
     public void lisaa(Tuote tuote) throws SailoException{
        tuotteet.lisaa(tuote);
     }
+    
+    
+    /**
+     * Lisätään uusi kategoria
+     * @param kat lisättävä kategoria
+     */
+    public void lisaa(Kategoria kat) {
+        kategoriat.lisaa(kat);
+    }
+    
     
     /**
      * @return tuotteiden lukumäärä
@@ -39,6 +52,12 @@ public class MyyntiPaikka {
     public Tuote annaTuote(int i) {
         return tuotteet.anna(i);
     }
+    
+
+    
+    
+    
+
 
     /**
      * @param args ei käytössä
@@ -71,6 +90,7 @@ public class MyyntiPaikka {
             Tuote tuote = myyntiPaikka.annaTuote(i);
             tuote.tulosta(System.out);
         }
+        
 
     }
 

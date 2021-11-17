@@ -94,7 +94,7 @@
    </left>
    <center>
 
-            <ScrollPane  fx:id="panelTuote" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ScrollPane fx:id="panelTuote" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <content>
                    <VBox BorderPane.alignment="CENTER">
          <children>
@@ -148,7 +148,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </CheckBox>
-            <Label text="Tuotekategoria">
+            <Label text="Tuotekuvaus">
                <padding>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -180,12 +180,18 @@
    <right>
       <VBox prefHeight="468.0" prefWidth="278.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Tuotekuvaus">
+            <Label text="Tuotteen kategoriat">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <TextArea prefHeight="451.0" prefWidth="258.0" text="Hyväkuntoinen, punainen  potkukelkka, &#10;joka nyt valmiina uuteen kotiin. " />
+            <TextArea prefWidth="258.0" text="... tähän kategoriat joihin tuote kuuluu ..." />
+            <Label text="Käytettävät kategoriat">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
+            <ListChooser rivit="1 kulkuvälineet&#10;2 lastentarvikkeet ja -lelut&#10;3 vaatteet ja kengät&#10;4 sisustus ja huonekalut&#10;5 piha ja puutarha&#10;6 vapaa-aika ja harrastukset&#10;" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -241,6 +247,17 @@
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Uusi kategoria">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#handleMyyntiPaikka" text="Peruuta">
                      <HBox.margin>

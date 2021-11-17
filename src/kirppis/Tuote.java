@@ -6,18 +6,18 @@ package kirppis;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import fi.jyu.mit.ohj2.Mjonot;
 
 import static kanta.PvmTarkistus.*;
 
 /**
- * tietää tuotteen tiedot (hinta, kunto, myynnin  
- *   aloituspvm...)                                
- * - osaa tarkistaa tietyn kentän tietojen         
- *    oikeellisuuden                               
- * - osaa muuttaa 4|kukkaruukku|...| -merkkijonon  
- *   tiedot tuotteen tiedoiksi                     
- * - osaa antaa merkkijonona i:n kentän tiedot     
- * - osaa laittaa merkkijonon i:nneksi kentäksi 
+ * Tietää tuotteen tiedot (hinta, kunto, myynnin  
+ *   aloituspvm...).                                
+ * Osaa tarkistaa tietyn kentän tietojen oikeellisuuden.                               
+ * Osaa muuttaa 4|kukkaruukku|...| -merkkijonon  
+ *   tiedot tuotteen tiedoiksi.                     
+ * Osaa antaa merkkijonona i:n kentän tiedot.     
+ * Osaa laittaa merkkijonon i:nneksi kentäksi. 
  * @author meikk
  * @version 18.10.2021
  *
@@ -32,7 +32,6 @@ public class Tuote {
     private String myynninAlkuPvm = "000000";
     boolean myyty = false;
     private String kuvaus = "";
-    // private String kategoria; ??
 
     private static int seuraavaNro = 1;
 
@@ -45,11 +44,9 @@ public class Tuote {
                 + String.format("%4.2f", hinta) + "€");
         out.println("Tuotteen kunto: " + kunto);
         out.println("Tuote laitettu myyntiin: " + myynninAlkuPvm);
-        out.println("Myyty? : " + myyty + " kuvaus: " + kuvaus);
-        //
+        out.println("Myyty? : " + myyty + " kuvaus: " + kuvaus);   
     }
-
-
+    
     /**
      * Tulostetaan tuotteen tiedot
      * @param os tietovirta johon tulostetaan
@@ -91,6 +88,16 @@ public class Tuote {
     }
     
     /**
+     * Asettaa tunnusnumeron ja samalla varmistaa, että 
+     * seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param nr asetettava tunnusnumero
+     */
+    public void setTunnusNro(int nr) {
+        tunnusNro = nr;
+        if (tunnusNro >= seuraavaNro) seuraavaNro = tunnusNro + 1;
+    }
+    
+    /**
      * Arvotaan satunnainen kokonaisluku välille (ala, yla)
      * @param ala arvonnan alaraja
      * @param yla arvonnan yläraja
@@ -107,15 +114,52 @@ public class Tuote {
     public void taytaTuoteTiedoilla() {
         nimi = "potkukelkka " + rand(1000, 9999);
         hinta = 40.00;
-        kunto = "hyvä";
+        kunto = "kelvollinen"; 
         myynninAlkuPvm = arvoPvm();
         myyty = false;
-        kuvaus = "punainen, tukeva";
-        // kategoria = "kulkuvälineet";
-        
- 
-        
+        kuvaus = "punainen, tukeva";    
     }
+    
+    @Override
+    public String toString() {
+        return "" + 
+                getTunnusNro() + "|" +
+                nimi + "|" +
+                hinta + "€|" + 
+                kunto + "|" +
+                myynninAlkuPvm + "|" +
+                myyty + "|" + 
+                kuvaus;
+    }
+    
+    /**
+     * @param rivi josta tuotteen tiedot otetaan
+     * 
+     * @example
+     * <pre name="test">
+     *  Tuote tuote = new Tuote();
+     *  tuote.parse("3  | potkukelkka | 20€");
+     *  tuote.getTunnusNro() === 3;
+     *  tuote.toString().startsWith("3|potkukelkka|20€|") === true;
+     *  
+     *  tuote.rekisteroi();
+     *  int n = tuote.getTunnusNro();
+     *  tuote.parse("" + (n+20));
+     *  tuote.rekisteroi();
+     *  tuote.getTunnusNro() === n+20+1;
+     * </pre>
+     */
+    public void parse(String rivi) {
+        StringBuilder sb = new StringBuilder(rivi);
+        setTunnusNro(Mjonot.erota(sb, '|', getTunnusNro()));
+        nimi = Mjonot.erota(sb, '|', nimi);
+        hinta = Mjonot.erota(sb, '|', hinta);
+        kunto = Mjonot.erota(sb, '|', kunto);
+        myynninAlkuPvm = Mjonot.erota(sb, '|', myynninAlkuPvm);
+        kuvaus = Mjonot.erota(sb, '|', kuvaus);
+    }
+    
+    
     /**
      * @param args ei käytössä
      */

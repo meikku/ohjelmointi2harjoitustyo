@@ -3,6 +3,14 @@
  */
 package kirppis;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+// import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
 /**
  * Pitää yllä tuoterekisteriä, osaa lisätä ja    
  * poistaa tuotteen                             
@@ -79,10 +87,63 @@ public class Tuotteet {
     
     
     /**
+     * Tallentaa tuotteet tiedostoon
+     * Tiedoston muoto: 
+     * <pre>
+     * 2|potkukelkka|25€|hyväkuntoinen|23.05.2015|myyty|punainen ja sievä|
+     * 3|kesämekko|10€|käyttämätön|12.08.2019|ei myyty|sinikeltainen|
+     * </pre>
+     * @param tiedNimi tallennettavan tiedoston nimi
+     * @throws SailoException jos tallennus ei onnistu
+     */
+    public void tallenna(String tiedNimi) throws SailoException {
+        File ftied = new File(tiedNimi + "/nimet.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
+            for (int i = 0; i < getLkm(); i++) {
+                Tuote tuote = anna(i);
+                fo.println(tuote);
+            }
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
+        }
+                
+    }
+    
+    /**
+     * Lukee tuotteet tiedostosta. kesken
+     * @param hakemisto tiedoston hakemisto
+     * @throws SailoException jos lukeminen epäonnistuu
+     */
+    public void lueTiedostosta(String hakemisto) throws SailoException {
+        String tiedostonNimi = hakemisto + "/nimet.dat";
+        File ftied = new File(tiedostonNimi);
+        try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
+            while ( fi.hasNext() ) {
+                String s = "";
+                s = fi.nextLine();
+                Tuote tuote = new Tuote();
+                tuote.parse(s); // voisi palauttaa jotakin?
+                lisaa(tuote);
+            }
+        } catch ( FileNotFoundException e ) {
+            throw new SailoException("Ei saa luettua tiedostoa " + tiedostonNimi);
+//        } catch ( IOException e ) {
+//            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
+        }
+    }
+    
+    /**
      * @param args ei käytössä
      */
     public static void main(String[] args) {
         Tuotteet tuotteet = new Tuotteet();
+        
+        try {
+            tuotteet.lueTiedostosta("kirppis");
+        } catch (SailoException e1) {
+            System.err.println(e1.getMessage());
+        }
+        
         Tuote potkuKelkka = new Tuote();
         Tuote potkuKelkka2 = new Tuote();
         
@@ -95,11 +156,14 @@ public class Tuotteet {
             tuotteet.lisaa(potkuKelkka);
             tuotteet.lisaa(potkuKelkka2);
             tuotteet.lisaa(potkuKelkka2);
-            tuotteet.lisaa(potkuKelkka2);
-            tuotteet.lisaa(potkuKelkka2);
-            tuotteet.lisaa(potkuKelkka2);
+        } catch (SailoException ex) {
+            System.err.println("Ei voi lukea: " + ex.getMessage());
+        }
+        
+        try {
+            tuotteet.tallenna("kirppis");
         } catch (SailoException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         
         System.out.println("============= Tuotteet testi ================");

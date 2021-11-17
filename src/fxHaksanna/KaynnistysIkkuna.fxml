@@ -14,7 +14,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.mit.fxgui.ModalController">
    <center>
-      <TextArea editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" promptText="Myyntitilasto" text="MYYNTITILASTO&#10;&#10;Versio 1.1&#10;Reaaliaikainen myynnin seurantatyökalu&#10;&#10;Häkkinen &amp; Pyrhönen">
+      <TextArea editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" promptText="Myyntitilasto" text="MYYNTITILASTO&#10;&#10;Versio 1.1&#10;Reaaliaikainen myynnin seurantatyökalu&#10;&#10; Pyrhönen">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
