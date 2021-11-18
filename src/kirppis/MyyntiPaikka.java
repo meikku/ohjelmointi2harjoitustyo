@@ -3,7 +3,9 @@
  */
 package kirppis;
 
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -16,7 +18,7 @@ package kirppis;
 public class MyyntiPaikka {
     private final Tuotteet tuotteet = new Tuotteet();
     private final Kategoriat kategoriat = new Kategoriat();
-    // private final Liitokset liitokset = new Liitokset();
+    private final Liitokset liitokset = new Liitokset();
     
     /**
      * Lisätään uusi jäsen
@@ -45,6 +47,13 @@ public class MyyntiPaikka {
     }
     
     /**
+     * @return kategorioiden lukumäärä
+     */
+    public int getKategoriat() {
+        return this.kategoriat.getLkm();
+    }
+    
+    /**
      * Antaa myyntipaikan i:nnen tuotteen
      * @param i monesko tuote (alkaa 0:sta)
      * @return tuote paikasta i
@@ -54,10 +63,30 @@ public class MyyntiPaikka {
     }
     
 
-    
-    
+    public Kategoria annaKategoria(int i) {
+        return kategoriat.anna(i);
+    }
     
 
+    /**
+     * Etsitään tuotteeseen liittyviä kategorioita liitokset-luokasta
+     * @param tuote tuote jonka kategorioita haetaan
+     * @return palauta lista tuotteen kategorioista
+     */
+    public List<Kategoria> annaKategoriat(Tuote tuote) {
+        List<Kategoria> loytyneet = new ArrayList<Kategoria>();
+        List<Liitos> kat = liitokset.annaKategoriat(tuote); // palauttaa kategoriat, haetaan kategoriat-luokasta selitteet
+        for (Liitos lts : kat) {
+           loytyneet.add(kategoriat.anna(lts.getKatNro()));
+
+        }
+        return loytyneet;
+    }
+    
+    
+    public Collection<Kategoria> annaKaikkiKat() {
+        return kategoriat.annaKaikki();
+    }
 
     /**
      * @param args ei käytössä

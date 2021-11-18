@@ -40,6 +40,24 @@ public class Kategoriat {
         }
     }
     
+    public Kategoria anna(int tunnusNro) {
+        for (Kategoria kat : alkiot) {
+            if (tunnusNro == kat.getTunnusNro()) return kat;
+            
+        }
+        return null;
+    }
+    
+    public Collection<Kategoria> annaKaikki() {
+        return alkiot;
+    }
+    
+    /**
+     * @return alkioiden lukumäärä
+     */
+    public int getLkm() {
+        return alkiot.size();
+    }
 
     /**
      * Testataan kategoriat-luokkaa
