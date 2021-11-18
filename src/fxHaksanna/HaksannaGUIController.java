@@ -105,7 +105,6 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void haeKat(int knro) {
-        // chooserKategoriat.clear();
          
         for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
             if (kat.getTunnusNro() == knro)
