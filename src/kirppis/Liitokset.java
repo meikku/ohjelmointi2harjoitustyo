@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.platform.engine.support.descriptor.CompositeTestSource;
+
 /**
  * Pitää yllä rekisteriä, jossa liitetään tuotteiden 
  *  ja niihin liittyvien kategorioiden id:t toisiinsa.                                                 
@@ -38,6 +40,13 @@ public class Liitokset {
      * Etsitään kategoriaan kuuluvat tuotteet
      * @param kat kategoria, jonka tuotteita etsitään
      * @return lista löytyneistä
+     * @example
+     * <pre name="test">
+     *  Kategoria kat = new Kategoria();
+     *  kat.taytaKatTiedoilla();
+     *  kat.rekisteroi;
+     *  annaTuotteet(kat) === 
+     * </pre>
      */
     public List<Liitos> annaTuotteet(Kategoria kat) {
         List<Liitos> loydetyt = new ArrayList<Liitos>();
@@ -82,6 +91,8 @@ public class Liitokset {
 
         liitokset.tulosta();
         Kategoria kulkuValine = new Kategoria();
+        kulkuValine.taytaKatTiedoilla();
+        kulkuValine.rekisteroi();
         
         System.out.println("\nEtsitään tuotteet: ");
         List<Liitos> liitokset2 = liitokset.annaTuotteet(kulkuValine);

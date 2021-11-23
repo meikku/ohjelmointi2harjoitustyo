@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 // import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Scanner;
  * @version 19.10.2021
  *
  */
-public class Tuotteet {
+public class Tuotteet implements Cloneable{
     
     private static final int MAX_TUOTTEITA = 5;
     private int lkm = 0;
@@ -37,11 +38,10 @@ public class Tuotteet {
     
     /**
      * Lisätään tuote luetteloon
-     * @param tuote lisättävä tuote
-     * @throws SailoException poikkeus jos väärä alkio
+     * @param tuote tuote joka lisätään
      * @example
      * <pre name="test">
-     * #THROWS SailoException
+     * #THROWS IndexOutOfBoundsException
      * Tuotteet tuotteet = new Tuotteet();
      * Tuote potkuKelkka = new Tuote();
      * Tuote potkuKelkka2 = new Tuote();
@@ -54,14 +54,14 @@ public class Tuotteet {
      * tuotteet.anna(0) === potkuKelkka;
      * tuotteet.anna(1) == potkuKelkka === false;
      * tuotteet.anna(1) == potkuKelkka2 === true;
-     * tuotteet.anna(3) === potkuKelkka; #THROWS IndexOutOfBoundException
+     * tuotteet.anna(150) === potkuKelkka; #THROWS IndexOutOfBoundsException
      * tuotteet.lisaa(potkuKelkka); tuotteet.getLkm() === 4;
      * tuotteet.lisaa(potkuKelkka); tuotteet.getLkm() === 5;
-     * tuotteet.lisaa(potkuKelkka); #THROWS SailoException
      * </pre>
      */
-    public void lisaa(Tuote tuote) throws SailoException {
-        if ( lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
+    public void lisaa(Tuote tuote) {
+        if ( lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm + 10);
+        
         this.alkiot[this.lkm] = tuote;
         this.lkm++;
     }
@@ -80,6 +80,7 @@ public class Tuotteet {
     /**
      * Palauttaa tuotteiden lukumäärän
      * @return tuotteiden lukumäärä
+     * </pre>
      */
     public int getLkm() {
         return lkm;
@@ -152,13 +153,11 @@ public class Tuotteet {
         potkuKelkka2.rekisteroi();
         potkuKelkka2.taytaTuoteTiedoilla();
         
-        try {
-            tuotteet.lisaa(potkuKelkka);
-            tuotteet.lisaa(potkuKelkka2);
-            tuotteet.lisaa(potkuKelkka2);
-        } catch (SailoException ex) {
-            System.err.println("Ei voi lukea: " + ex.getMessage());
-        }
+
+        tuotteet.lisaa(potkuKelkka);
+        tuotteet.lisaa(potkuKelkka2);
+        tuotteet.lisaa(potkuKelkka2);
+        
         
         try {
             tuotteet.tallenna("kirppis");

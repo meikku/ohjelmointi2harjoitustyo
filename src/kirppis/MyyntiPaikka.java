@@ -3,6 +3,7 @@
  */
 package kirppis;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +39,13 @@ public class MyyntiPaikka {
         kategoriat.lisaa(kat);
     }
     
+    /**
+     * Lisätään uusi liitos
+     * @param lts liitos
+     */
+    public void lisaa(Liitos lts) {
+        liitokset.lisaa(lts);
+    }
     
     /**
      * @return tuotteiden lukumäärä
@@ -87,6 +95,7 @@ public class MyyntiPaikka {
     public Collection<Kategoria> annaKaikkiKat() {
         return kategoriat.annaKaikki();
     }
+    
 
     /**
      * @param args ei käytössä

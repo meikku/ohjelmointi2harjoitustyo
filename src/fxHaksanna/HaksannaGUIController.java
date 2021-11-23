@@ -2,6 +2,7 @@ package fxHaksanna;
 
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import kirppis.Kategoria;
+import kirppis.Liitos;
 import kirppis.MyyntiPaikka;
 import kirppis.SailoException;
 import kirppis.Tuote;
@@ -73,12 +75,11 @@ public class HaksannaGUIController implements Initializable{
         chooserTuotteet.clear();
         chooserTuotteet.addSelectionListener(e -> naytaTuote());
         chooserKategoriat.clear();
-        chooserKategoriat.addSelectionListener(e -> naytaKategoria());
     }
     
     private void lisaaKategoria() {
         // ModalController.showModal(HaksannaGUIController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Muokkaa kategorioita", null, "");
-        naytaKategoria();
+        tuotteenKategoria();
     }
     
     private void muokkaaTuote() {
@@ -93,14 +94,31 @@ public class HaksannaGUIController implements Initializable{
         uusiKat();
     }
     
-    private void naytaKategoria() {
+    private void tuotteenKategoria() {
+        tuotteenKat.setText("");
         Kategoria katKohdalla = chooserKategoriat.getSelectedObject();
+        Tuote tuoteKohdalla = chooserTuotteet.getSelectedObject();
         
-        if (katKohdalla == null) return;
+        if (katKohdalla == null || tuoteKohdalla == null) return;
+        
+        
+        Liitos uusi = new Liitos();
+        uusi.rekisteroi(tuoteKohdalla.getTunnusNro(), katKohdalla.getTunnusNro());
+        myyntiPaikka.lisaa(uusi);
+        uusi.tulosta(System.out);
+        naytaTuotteenKat();
+    }
+    
+    private void naytaTuotteenKat() {
         
         tuotteenKat.setText("");
+        Tuote tuoteKohdalla = chooserTuotteet.getSelectedObject();
+        List<Kategoria> tuoteKat = myyntiPaikka.annaKategoriat(tuoteKohdalla);
+
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(tuotteenKat)) {
-            katKohdalla.tulosta(os);
+            for (Kategoria kat : tuoteKat) {
+                kat.tulosta(os);
+            }
         }
     }
     
@@ -136,6 +154,7 @@ public class HaksannaGUIController implements Initializable{
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaTuote)) {
                 tuoteKohdalla.tulosta(os);
         }
+        naytaTuotteenKat();
     }
     
     

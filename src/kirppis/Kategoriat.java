@@ -1,5 +1,6 @@
 package kirppis;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,10 +34,11 @@ public class Kategoriat {
     
     /**
      * Tulostetaan kaikki kategoriat
+     * @param os tietovirta johon tulostetaan
      */
-    public void tulosta() {
+    public void tulosta(OutputStream os) {
         for (Kategoria kat : alkiot) {
-            kat.tulosta(System.out);
+            kat.tulosta(os);
         }
     }
     
@@ -84,7 +86,7 @@ public class Kategoriat {
         
         System.out.println("======= Kategoriat testi =======");
     
-        kategoriat.tulosta();
+        kategoriat.tulosta(System.out);
         
 
     }
