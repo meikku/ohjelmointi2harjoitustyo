@@ -140,7 +140,7 @@ public class Tuote {
      *  Tuote tuote = new Tuote();
      *  tuote.parse("3  | potkukelkka | 20€");
      *  tuote.getTunnusNro() === 3;
-     *  tuote.toString().startsWith("3|potkukelkka|20€|") === true;
+     *  tuote.toString().startsWith("003|potkukelkka|20€|") === true;
      *  
      *  tuote.rekisteroi();
      *  int n = tuote.getTunnusNro();
