@@ -94,11 +94,11 @@ public class Tuotteet implements Cloneable{
      * 2|potkukelkka|25€|hyväkuntoinen|23.05.2015|myyty|punainen ja sievä|
      * 3|kesämekko|10€|käyttämätön|12.08.2019|ei myyty|sinikeltainen|
      * </pre>
-     * @param tiedNimi tallennettavan tiedoston nimi
+     * @param tied tilapäisesti näin TODO
      * @throws SailoException jos tallennus ei onnistu
      */
-    public void tallenna(String tiedNimi) throws SailoException {
-        File ftied = new File(tiedNimi + "/nimet.dat");
+    public void tallenna(String tied) throws SailoException {
+        File ftied = new File(tied + "/tuotteet.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (int i = 0; i < getLkm(); i++) {
                 Tuote tuote = anna(i);
@@ -112,12 +112,14 @@ public class Tuotteet implements Cloneable{
     
     /**
      * Lukee tuotteet tiedostosta. kesken
-     * @param hakemisto tiedoston hakemisto
+     * @param hakemisto tiedoston hakemisto TODO muuta tämä
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        String tiedostonNimi = hakemisto + "/nimet.dat";
-        File ftied = new File(tiedostonNimi);
+        //setTiedostonPerusNimi(tied);
+        // File ftied = new File(hakemisto);
+        String nimi = hakemisto + "/tuotteet.dat";
+        File ftied = new File(nimi); // TODO muuta tämä
         try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
             while ( fi.hasNext() ) {
                 String s = "";
@@ -127,12 +129,14 @@ public class Tuotteet implements Cloneable{
                 lisaa(tuote);
             }
         } catch ( FileNotFoundException e ) {
-            throw new SailoException("Ei saa luettua tiedostoa " + tiedostonNimi);
+            throw new SailoException("Ei saa luettua tiedostoa " + nimi);
 //        } catch ( IOException e ) {
 //            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
         }
     }
+
     
+
     /**
      * @param args ei käytössä
      */
@@ -141,8 +145,8 @@ public class Tuotteet implements Cloneable{
         
         try {
             tuotteet.lueTiedostosta("kirppis");
-        } catch (SailoException e1) {
-            System.err.println(e1.getMessage());
+        } catch (SailoException ex) {
+            System.err.println(ex.getMessage());
         }
         
         Tuote potkuKelkka = new Tuote();
@@ -155,7 +159,6 @@ public class Tuotteet implements Cloneable{
         
 
         tuotteet.lisaa(potkuKelkka);
-        tuotteet.lisaa(potkuKelkka2);
         tuotteet.lisaa(potkuKelkka2);
         
         

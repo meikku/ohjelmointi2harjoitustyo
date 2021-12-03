@@ -16,9 +16,10 @@ import java.util.List;
  *
  */
 public class MyyntiPaikka {
-    private final Tuotteet tuotteet = new Tuotteet();
-    private final Kategoriat kategoriat = new Kategoriat();
+    private Tuotteet tuotteet = new Tuotteet();
+    private Kategoriat kategoriat = new Kategoriat();
     private final Liitokset liitokset = new Liitokset();
+    String hakemisto = "kirppis";
     
     /**
      * Lisätään uusi jäsen
@@ -70,6 +71,11 @@ public class MyyntiPaikka {
     }
     
 
+    /**
+     * Antaa myyntipaikan i:nnen kategorian
+     * @param i kategorialistan indeksi
+     * @return palauttaa indeksin kohdalta löytyvän kategorian
+     */
     public Kategoria annaKategoria(int i) {
         return kategoriat.anna(i);
     }
@@ -91,16 +97,60 @@ public class MyyntiPaikka {
     }
     
     
+    /**
+     * Palauttaa listan kategorioista
+     * @return lista kategorioista
+     */
     public Collection<Kategoria> annaKaikkiKat() {
         return kategoriat.annaKaikki();
     }
     
+    
+    
+    /**
+     * @param nimi tiedoston nimi
+     * @throws SailoException jos tiedoston lukeminen ei onnistu
+     */
+    public void lueTiedostosta(String nimi) throws SailoException {
+        // tuotteet.lueTiedostosta(nimi);
+        tuotteet = new Tuotteet(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
+        kategoriat = new Kategoriat();
+        
+        // setTiedosto(nimi);
+        tuotteet.lueTiedostosta(hakemisto);
+        kategoriat.lueTiedostosta(hakemisto);
+    }
+    
+    /**
+     * Tallennetaan kirppiksen tiedot tiedostoon.
+     * @throws SailoException jos tallentamisessa ongelmia
+     */
+    public void tallenna() throws SailoException {
+        String virhe = "";
+        try {
+            tuotteet.tallenna(hakemisto); 
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
+        }
+        try {
+            kategoriat.tallenna(hakemisto);
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
+        }
+        if (!"".equals(virhe) ) throw new SailoException(virhe);
+    }
 
     /**
      * @param args ei käytössä
      */
     public static void main(String[] args) {
         MyyntiPaikka myyntiPaikka = new MyyntiPaikka();
+        try {
+            myyntiPaikka.lueTiedostosta("kirppis");
+        } catch (SailoException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         Tuote potkuKelkka = new Tuote();
         Tuote potkuKelkka2 = new Tuote();
@@ -108,16 +158,20 @@ public class MyyntiPaikka {
         potkuKelkka.taytaTuoteTiedoilla();
         potkuKelkka2.rekisteroi();
         potkuKelkka2.taytaTuoteTiedoilla();
+        
+        Kategoria kulkuneuvo1 = new Kategoria();
+        Kategoria kulkuneuvo2 = new Kategoria();
+        kulkuneuvo1.rekisteroi();
+        kulkuneuvo2.rekisteroi();
+        kulkuneuvo1.taytaKatTiedoilla();
+        kulkuneuvo2.taytaKatTiedoilla();
 
         
         try {
             myyntiPaikka.lisaa(potkuKelkka);
             myyntiPaikka.lisaa(potkuKelkka2);
-            myyntiPaikka.lisaa(potkuKelkka2);
-            myyntiPaikka.lisaa(potkuKelkka2);
-            myyntiPaikka.lisaa(potkuKelkka2);
-            myyntiPaikka.lisaa(potkuKelkka2);
-            myyntiPaikka.lisaa(potkuKelkka2);
+            myyntiPaikka.lisaa(kulkuneuvo1);
+            myyntiPaikka.lisaa(kulkuneuvo2);
         } catch (SailoException e) {
             System.err.println(e.getMessage());//e.printStackTrace();
         }
@@ -126,6 +180,11 @@ public class MyyntiPaikka {
         for (int i = 0; i < myyntiPaikka.getTuotteet(); i++) {
             Tuote tuote = myyntiPaikka.annaTuote(i);
             tuote.tulosta(System.out);
+        }
+        
+        Collection<Kategoria> kategoriat = myyntiPaikka.annaKaikkiKat();
+        for (Kategoria kat : kategoriat) {
+            kat.tulosta(System.out);
         }
         
 

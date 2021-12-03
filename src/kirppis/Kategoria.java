@@ -3,6 +3,8 @@ package kirppis;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * Tietää kategorian kentät.                                          
  * Osaa tarkistaa kategorian tietyn kentän                           
@@ -83,6 +85,14 @@ public class Kategoria {
     }
     
     /**
+     * Asettaa tunnusnumeron ja varmistaa, että seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param nr asetettava tunnusnro
+     */
+    public void setTunnusNro(int nr) {
+        tunnusNro = nr;
+        if (tunnusNro >= seuraavaNro) seuraavaNro = tunnusNro + 1;
+    }
+    /**
      * Palauttaa kategorian nimen
      * @return kategorian nimen 
      */
@@ -111,7 +121,34 @@ public class Kategoria {
         kuvaus = "kaikki liikkumista helpottava";
     }   
     
-    
+    @Override
+    public String toString() {
+        return "" 
+                + getTunnusNro() + "|" 
+                + nimi + "|"
+                + kuvaus;
+    }
+    /**
+     * @param rivi rivi josta otetaan kategorian tiedot
+     * @example
+     * <pre name="test">
+     *  Kategoria kat = new Kategoria();
+     *  kat.parse("7 | huonekalut | talon sisustamiseen");
+     *  kat.getTunnusNro() === 7;
+     *  kat.toString().startsWith("007|huonekalut|talon sisustamiseen");
+     *  kat.rekisteroi();
+     *  int n = kat.getTunnusNro();
+     *  kat.parse("" + (n + 2));
+     *  kat.rekisteroi();
+     *  kat.getTunnusNro() === n + 2 + 1;
+     * </pre>
+     */
+    public void parse(String rivi) {
+        StringBuilder sb = new StringBuilder(rivi);
+        setTunnusNro(Mjonot.erota(sb, '|', getTunnusNro()));
+        nimi = Mjonot.erota(sb, '|', nimi);
+        kuvaus = Mjonot.erota(sb, '|', kuvaus);
+    }
     
     /**
      * Testiohjelma kategorialle.
