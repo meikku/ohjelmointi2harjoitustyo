@@ -18,7 +18,7 @@ import java.util.List;
 public class MyyntiPaikka {
     private Tuotteet tuotteet = new Tuotteet();
     private Kategoriat kategoriat = new Kategoriat();
-    private final Liitokset liitokset = new Liitokset();
+    private Liitokset liitokset = new Liitokset();
     String hakemisto = "kirppis";
     
     /**
@@ -115,10 +115,12 @@ public class MyyntiPaikka {
         // tuotteet.lueTiedostosta(nimi);
         tuotteet = new Tuotteet(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
         kategoriat = new Kategoriat();
+        liitokset = new Liitokset();
         
         // setTiedosto(nimi);
         tuotteet.lueTiedostosta(hakemisto);
         kategoriat.lueTiedostosta(hakemisto);
+        liitokset.lueTiedostosta(hakemisto);
     }
     
     /**
@@ -134,6 +136,11 @@ public class MyyntiPaikka {
         }
         try {
             kategoriat.tallenna(hakemisto);
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
+        }
+        try {
+            liitokset.tallenna(hakemisto);
         } catch ( SailoException ex ) {
             virhe = ex.getMessage();
         }

@@ -3,6 +3,8 @@ package kirppis;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * Yhdistää tuotteen oikeaan kategoriaan. 
  * Sama tuote voi kuulua myös useampaan kategoriaan.
@@ -72,8 +74,37 @@ public class Liitos {
      *      on talletettu tuote ja sitä vastaava kategoria
      * @return yhdysnumeron
      */
-    public int getyhdysNro() {
+    public int getYhdysNro() {
         return yhdysNro;
+    }
+    
+    /**
+     * Asetetaan tunnusnro ja varmistetaan että seuraava numero on aina suurempi kuin 
+     * suurin tähän mennessä
+     * @param nr asetettava tunnusnumero
+     */
+    public void setYhdysNro(int nr) {
+        yhdysNro = nr;
+        if (yhdysNro >= seuraavaNro) seuraavaNro = yhdysNro + 1;
+    }
+    
+    @Override
+    public String toString() {
+        return "" 
+                + getYhdysNro() + "|"
+                + getTuoteNro() + "|"
+                + getKatNro();
+    }
+    
+    /**
+     * Parsitaan rivi merkkijonoksi
+     * @param rivi rivi josta tiedot luetaan
+     */
+    public void parse(String rivi) {
+        StringBuilder sb = new StringBuilder(rivi);
+        setYhdysNro(Mjonot.erota(sb, '|', getYhdysNro()));
+        tuoteNro = Mjonot.erota(sb, '|', tuoteNro);
+        katNro = Mjonot.erota(sb, '|', katNro);
     }
      
     

@@ -1,9 +1,15 @@
 package kirppis;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.platform.engine.support.descriptor.CompositeTestSource;
 
@@ -34,6 +40,54 @@ public class Liitokset {
         for (Liitos lts : alkiot) {
             lts.tulosta(System.out);
         }
+    }
+    
+    public int getLkm() {
+        return alkiot.size();
+    }
+    
+    public void lueTiedostosta(String hakemisto) throws SailoException {
+        String nimi = hakemisto + "/liitokset.dat";
+        File ftied = new File(nimi);
+        try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
+            while ( fi.hasNext() ) {
+                String s = "";
+                s = fi.nextLine();
+                Liitos lts = new Liitos();
+                lts.parse(s); // voisi palauttaa jotakin?
+                lisaa(lts);
+            }
+        } catch ( FileNotFoundException e ) {
+            throw new SailoException("Ei saa luettua tiedostoa " + nimi);
+        }
+    }
+    
+    /**
+     * @param tunnusNro tuote-kategoriayhdistelmän tunnusNro
+     * @return tunnusNrolla löytyvien tuote-kategoriayhdistelmän tunnusnrot
+     */
+    public Liitos anna(int tunnusNro) {
+        for ( Liitos liitos : alkiot) {
+            if (tunnusNro == liitos.getYhdysNro()) return liitos;
+        }
+        return null;   
+    }
+    
+    /**
+     * Tallennetaan tuotteen ja kategorian yhdistelmät tunnusnroina tiedostoon
+     * @param tied hakemiston nimi
+     * @throws SailoException jos tallentaminen ei onnistu
+     */
+    public void tallenna(String tied) throws SailoException {
+        File ftied = new File(tied + "/liitokset.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
+           for (Liitos liitos : alkiot) {
+                fo.println(liitos);
+            }
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
+        }
+                
     }
     
     /**
@@ -100,13 +154,9 @@ public class Liitokset {
         for (Liitos lts : liitokset2) {
             lts.tulosta(System.out);
         }
-        
-        
 
         
     }
-    
-    
-   
+ 
 
 }
