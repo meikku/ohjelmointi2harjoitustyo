@@ -108,10 +108,10 @@ public class MyyntiPaikka {
     
     
     /**
-     * @param nimi tiedoston nimi
+     * @param hakemisto tiedoston hakemiston nimi
      * @throws SailoException jos tiedoston lukeminen ei onnistu
      */
-    public void lueTiedostosta(String nimi) throws SailoException {
+    public void lueTiedostosta(String hakemisto) throws SailoException {
         // tuotteet.lueTiedostosta(nimi);
         tuotteet = new Tuotteet(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
         kategoriat = new Kategoriat();
@@ -181,12 +181,6 @@ public class MyyntiPaikka {
             Tuote tuote = myyntiPaikka.annaTuote(i);
             tuote.tulosta(System.out);
         }
-        
-        Collection<Kategoria> kategoriat = myyntiPaikka.annaKaikkiKat();
-        for (Kategoria kat : kategoriat) {
-            kat.tulosta(System.out);
-        }
-        
 
     }
 

@@ -27,6 +27,7 @@ import kirppis.Tuote;
  */
 public class HaksannaGUIController implements Initializable{
 
+    
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
@@ -56,6 +57,11 @@ public class HaksannaGUIController implements Initializable{
     @FXML void handleUusiKategoria() {
         uusiKategoria();
     }
+    
+    @FXML
+    void handleTallenna() {
+        tallenna();
+    }
 
     @FXML private ListChooser<Tuote> chooserTuotteet;
     @FXML private ScrollPane panelTuote;
@@ -64,6 +70,7 @@ public class HaksannaGUIController implements Initializable{
     
 // -----------------------------
     private MyyntiPaikka myyntiPaikka;
+    private String myyntiPaikanNimi = "kirppis";
     
     private TextArea areaTuote = new TextArea(); // TODO: poista myöhemmin
     
@@ -186,6 +193,39 @@ public class HaksannaGUIController implements Initializable{
             return;
         }
         hae(uusi.getTunnusNro());
+    }
+    
+//    private void setTitle(String title) {
+//        ModalController.getStage(hakuehto).setTitle(title);
+//    }
+    
+    /**
+     * @return null jos onnistui, virhe jos tiedoston lukeminen ei onnistu
+     */
+    protected String lueTiedosto() {
+        // setTitle("Myyntipaikka - " + myyntiPaikanNimi);
+        try {
+            myyntiPaikka.lueTiedostosta(myyntiPaikanNimi);
+            hae(0);
+            return null;
+        } catch (SailoException e) {
+            hae(0);
+            String virhe = e.getMessage();
+            if ( virhe != null ) Dialogs.showMessageDialog(virhe);
+            return virhe;
+        }
+        
+    }
+    
+    private String tallenna() {
+        try {
+            myyntiPaikka.tallenna();
+            return null;
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Tallennus ei onnistu " + e.getMessage());
+            return e.getMessage();
+        }
+        
     }
     
     private void naytaRaportti() {
