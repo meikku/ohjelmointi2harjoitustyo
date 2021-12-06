@@ -16,10 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/16"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.mit.fxgui.ModalController">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxHaksanna.TuoteDialogController">
 	<center>
 		<VBox BorderPane.alignment="CENTER">
 			<children>
+			<Label fx:id="labelVirhe" maxWidth="1000.0"></Label>
 				<GridPane alignment="CENTER_RIGHT" hgap="10.0">
 					<columnConstraints>
 						<ColumnConstraints hgrow="SOMETIMES"
@@ -39,10 +40,10 @@
 						<Label alignment="CENTER_RIGHT" text="Tuote" />
 						<Label text="Hinta" GridPane.rowIndex="1" />
 						<Label text="Kunto" GridPane.rowIndex="2" />
-						<TextField GridPane.columnIndex="1" />
-						<TextField GridPane.columnIndex="1"
+						<TextField fx:id="editNimi" text="" GridPane.columnIndex="1" />
+						<TextField fx:id="editHinta" text="" GridPane.columnIndex="1"
 							GridPane.rowIndex="1" />
-						<TextField GridPane.columnIndex="1"
+						<TextField fx:id="editKunto" text="" GridPane.columnIndex="1"
 							GridPane.rowIndex="2" />
 					</children>
 					<padding>
@@ -106,13 +107,13 @@
 		<HBox alignment="CENTER_RIGHT" spacing="10.0"
 			BorderPane.alignment="CENTER_RIGHT">
 			<children>
-				<Button cancelButton="true" mnemonicParsing="false" onAction="#handleDefaultCancel" text="Poista tuote" />
-				<Button defaultButton="true" mnemonicParsing="false" onAction="#handleDefaultOK" text="Tallenna">
+				<Button cancelButton="true" mnemonicParsing="false" onAction="#handlePoistaTuote" text="Poista tuote" />
+				<Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="Tallenna">
 					<HBox.margin>
 						<Insets />
 					</HBox.margin>
 				</Button>
-				<Button cancelButton="true" mnemonicParsing="false" onAction="#handleDefaultCancel" text="Peruuta" />
+				<Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
 			</children>
 			<opaqueInsets>
 				<Insets />

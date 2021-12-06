@@ -74,8 +74,9 @@ public class HaksannaGUIController implements Initializable{
 // -----------------------------
     private MyyntiPaikka myyntiPaikka;
     private String myyntiPaikanNimi = "kirppis";
-    
+    private Tuote tuoteKohdalla;
     private TextArea areaTuote = new TextArea(); // TODO: poista myöhemmin
+    
     
     private void alusta() {
         panelTuote.setContent(areaTuote);
@@ -93,8 +94,9 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void muokkaaTuote() {
-        ModalController.showModal(HaksannaGUIController.class.getResource("MuokkaaTuotetta.fxml"), "Muokkaa tuotetta", null, "");
+        TuoteDialogController.kysyTuote(null, tuoteKohdalla);
     }
+    
     private void lisaaTuote() {
         //ModalController.showModal(HaksannaGUIController.class.getResource("LisaaTuote.fxml"), "Lisää tuote", null, "");
         uusiTuote();
@@ -109,7 +111,7 @@ public class HaksannaGUIController implements Initializable{
     private void tuotteenKategoria() {
         tuotteenKat.setText("");
         Kategoria katKohdalla = chooserKategoriat.getSelectedObject();
-        Tuote tuoteKohdalla = chooserTuotteet.getSelectedObject();
+        tuoteKohdalla = chooserTuotteet.getSelectedObject();
         
         if (katKohdalla == null || tuoteKohdalla == null) return;
         
@@ -124,7 +126,7 @@ public class HaksannaGUIController implements Initializable{
     private void naytaTuotteenKat() {
         
         tuotteenKat.setText("");
-        Tuote tuoteKohdalla = chooserTuotteet.getSelectedObject();
+        tuoteKohdalla = chooserTuotteet.getSelectedObject();
         List<Kategoria> tuoteKat = myyntiPaikka.annaKategoriat(tuoteKohdalla);
 
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(tuotteenKat)) {
@@ -132,6 +134,7 @@ public class HaksannaGUIController implements Initializable{
                 kat.tulosta(os);
             }
         }
+        
     }
     
     private void haeKaikkiKat() {
@@ -178,7 +181,7 @@ public class HaksannaGUIController implements Initializable{
     
     
     private void naytaTuote() {
-        Tuote tuoteKohdalla = chooserTuotteet.getSelectedObject();
+        tuoteKohdalla = chooserTuotteet.getSelectedObject();
         
         if (tuoteKohdalla == null) return;
         
