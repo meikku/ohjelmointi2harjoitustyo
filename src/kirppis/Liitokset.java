@@ -46,9 +46,13 @@ public class Liitokset {
         return alkiot.size();
     }
     
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        String nimi = hakemisto + "/liitokset.dat";
-        File ftied = new File(nimi);
+    /**
+     * @param nimi hakemiston nimi josta luetaan
+     * @throws SailoException jos lukeminen ei onnistu
+     */
+    public void lueTiedostosta(String nimi) throws SailoException {
+        String tiedNimi = nimi + "/liitokset.dat";
+        File ftied = new File(tiedNimi);
         try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
             while ( fi.hasNext() ) {
                 String s = "";

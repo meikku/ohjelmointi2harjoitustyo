@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import kirppis.Kategoria;
 import kirppis.Liitos;
@@ -48,7 +47,7 @@ public class HaksannaGUIController implements Initializable{
         naytaRaportti();
     }
     @FXML void handleMyyntiPaikka() {
-        vaihdaMyyntiPaikkaa();
+        valitseMyyntiPaikka();
     }
     @FXML void handleKategoriaKuvaukset() {
         naytaKategoriaKuvaukset();
@@ -56,6 +55,10 @@ public class HaksannaGUIController implements Initializable{
     
     @FXML void handleUusiKategoria() {
         uusiKategoria();
+    }
+    
+    @FXML void handleAvaa() {
+        avaa();
     }
     
     @FXML
@@ -101,6 +104,8 @@ public class HaksannaGUIController implements Initializable{
         uusiKat();
     }
     
+    
+    
     private void tuotteenKategoria() {
         tuotteenKat.setText("");
         Kategoria katKohdalla = chooserKategoriat.getSelectedObject();
@@ -129,6 +134,14 @@ public class HaksannaGUIController implements Initializable{
         }
     }
     
+    private void haeKaikkiKat() {
+        for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
+            
+            chooserKategoriat.add(kat.getNimi(), kat);
+        }
+        
+    }
+    
     private void haeKat(int knro) {
          
         for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
@@ -138,6 +151,18 @@ public class HaksannaGUIController implements Initializable{
         }
         chooserKategoriat.setSelectedIndex(knro);
     } 
+    
+    private void hae(int tnro) {
+        chooserTuotteet.clear();
+        
+        int index = 0;
+        for (int i = 0; i < myyntiPaikka.getTuotteet(); i++) {
+            Tuote tuote = myyntiPaikka.annaTuote(i);
+            if (tuote.getTunnusNro() == tnro) index = i;
+            chooserTuotteet.add(tuote.getNimi(), tuote);
+        }
+        chooserTuotteet.setSelectedIndex(index); // tästä tulee muutosviesti
+    }
     
     /*
      * Lisätään myyntipaikkaan uusi kategoria
@@ -165,17 +190,7 @@ public class HaksannaGUIController implements Initializable{
     }
     
     
-    private void hae(int tnro) {
-        chooserTuotteet.clear();
-        
-        int index = 0;
-        for (int i = 0; i < myyntiPaikka.getTuotteet(); i++) {
-            Tuote tuote = myyntiPaikka.annaTuote(i);
-            if (tuote.getTunnusNro() == tnro) index = i;
-            chooserTuotteet.add(tuote.getNimi(), tuote);
-        }
-        chooserTuotteet.setSelectedIndex(index); // tästä tulee muutosviesti
-    }
+   
     
 
     /*
@@ -200,21 +215,45 @@ public class HaksannaGUIController implements Initializable{
 //    }
     
     /**
+     * @param nimi tiedosto josta myyntipaikan tiedot luetaan
      * @return null jos onnistui, virhe jos tiedoston lukeminen ei onnistu
      */
-    protected String lueTiedosto() {
-        // setTitle("Myyntipaikka - " + myyntiPaikanNimi);
+    protected String lueTiedosto(String nimi) {
+        myyntiPaikanNimi = nimi;
         try {
-            myyntiPaikka.lueTiedostosta(myyntiPaikanNimi);
+            myyntiPaikka.lueTiedostosta(nimi);
             hae(0);
+            haeKaikkiKat();
             return null;
         } catch (SailoException e) {
             hae(0);
+            haeKaikkiKat();
             String virhe = e.getMessage();
             if ( virhe != null ) Dialogs.showMessageDialog(virhe);
             return virhe;
         }
         
+    }
+    
+    
+    /**
+     * Tarkistetaan onko tallennus tehty
+     * @return true jos saa sulkea
+     */
+    public boolean voikoSulkea() {
+        tallenna();
+        return true;
+    }
+    /**
+     * Kysytään tiedoston nimi ja luetaan se
+     * @return true jos onnistui, false jos ei 
+     */
+    public boolean avaa() {
+        // ModalController.showModal(HaksannaGUIController.class.getResource("KaynnistysIkkuna.fxml"), "Myyntitilasto", null, "");
+        String uusiNimi = KaynnistysIkkunaController.kysyNimi(null, myyntiPaikanNimi);
+        if (uusiNimi == null) return false;
+        lueTiedosto(uusiNimi);
+        return true;
     }
     
     private String tallenna() {
@@ -231,9 +270,11 @@ public class HaksannaGUIController implements Initializable{
     private void naytaRaportti() {
         ModalController.showModal(HaksannaGUIController.class.getResource("MyyntiTilasto.fxml"), "Raportti", null, "");
     }
-    private void vaihdaMyyntiPaikkaa() {
+    
+    private void valitseMyyntiPaikka() {
         ModalController.showModal(HaksannaGUIController.class.getResource("KaynnistysIkkuna.fxml"), "Myyntitilasto", null, "");
     }
+    
     private void naytaKategoriaKuvaukset() {
         Dialogs.showMessageDialog("Kategorioiden kuvaukset tulossa pian...");
     }  

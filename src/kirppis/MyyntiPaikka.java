@@ -108,19 +108,19 @@ public class MyyntiPaikka {
     
     
     /**
-     * @param hakemisto tiedoston hakemiston nimi
+     * @param nimi tiedoston hakemiston nimi
      * @throws SailoException jos tiedoston lukeminen ei onnistu
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
+    public void lueTiedostosta(String nimi) throws SailoException {
         // tuotteet.lueTiedostosta(nimi);
         tuotteet = new Tuotteet(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
         kategoriat = new Kategoriat();
         liitokset = new Liitokset();
         
         // setTiedosto(nimi);
-        tuotteet.lueTiedostosta(hakemisto);
-        kategoriat.lueTiedostosta(hakemisto);
-        liitokset.lueTiedostosta(hakemisto);
+        tuotteet.lueTiedostosta(nimi);
+        kategoriat.lueTiedostosta(nimi);
+        liitokset.lueTiedostosta(nimi);
     }
     
     /**
@@ -188,7 +188,6 @@ public class MyyntiPaikka {
             Tuote tuote = myyntiPaikka.annaTuote(i);
             tuote.tulosta(System.out);
         }
-
     }
 
 }

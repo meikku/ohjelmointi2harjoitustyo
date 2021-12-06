@@ -1,6 +1,7 @@
 package fxHaksanna;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import kirppis.MyyntiPaikka;
 import javafx.scene.Scene;
@@ -25,11 +26,20 @@ public class HaksannaMain extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Myyntipaikka");
             
+            primaryStage.setOnCloseRequest((event) -> {
+                if (!haksannaCtrl.voikoSulkea() ) event.consume();
+            });
+            
             MyyntiPaikka myyntiPaikka = new MyyntiPaikka();
             haksannaCtrl.setMyyntiPaikka(myyntiPaikka);
             
-            
             primaryStage.show();
+            
+            Application.Parameters params = getParameters();
+            if (params.getRaw().size() > 0)
+                haksannaCtrl.lueTiedosto(params.getRaw().get(0));
+            else 
+                if ( !haksannaCtrl.avaa() ) Platform.exit();
             
         } catch(Exception e) {
             e.printStackTrace();
