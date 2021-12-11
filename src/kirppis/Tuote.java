@@ -22,7 +22,7 @@ import static kanta.PvmTarkistus.*;
  * @version 18.10.2021
  *
  */
-public class Tuote {
+public class Tuote implements Cloneable{
 
     private int tunnusNro = 0;
     private String nimi = "";
@@ -41,7 +41,7 @@ public class Tuote {
      */
     public void tulosta(PrintStream out) {
         out.println(String.format("%03d", tunnusNro) + " " + nimi + " "
-                + String.format("%4.2f", hinta) + "€");
+                + String.format("%.2f", hinta));
         out.println("Tuotteen kunto: " + kunto);
         out.println("Tuote laitettu myyntiin: " + myynninAlkuPvm);
         out.println("Myyty? : " + myyty + " kuvaus: " + kuvaus);   
@@ -78,6 +78,41 @@ public class Tuote {
         return this.tunnusNro;
     }
     
+    @Override
+    public Tuote clone() throws CloneNotSupportedException {
+        Tuote uusi;
+        uusi = (Tuote) super.clone();
+        return uusi;
+    }
+    
+    /**
+     * @return tuotteen nimi
+     */
+    public String getNimi() {
+        
+        return nimi;
+    }
+    
+    /**
+     * @return tuotteen hinta merkkijonona
+     */
+    public String getHinta() {
+        return String.format("%.2f", hinta);
+    }
+    
+    /**
+     * @return tuotteen kunto
+     */
+    public String getKunto() {
+        return kunto;
+    }
+    
+    /**
+     * @return tuotteen kuvaus
+     */
+    public String getKuvaus() {
+        return kuvaus;
+    }
     
     /**
      * Palauttaa tuotteen tunnusnumeron.
@@ -85,6 +120,55 @@ public class Tuote {
      */
     public int getTunnusNro() {
         return tunnusNro;
+    }
+
+    /**
+     * @param s tuotteelle asetettava nimi
+     * @return virheilmoitus, null jos ok
+     */
+    public String setNimi(String s) {
+        nimi = s;
+        return null;
+    }
+    
+    /**
+     * @param s tuotteelle asetettava kunto
+     * @return virheilmoitus, null jos ok
+     */
+    public String setKunto(String s) {
+        kunto = s;
+        return null;
+    }
+    
+    /**
+     * @param s tuotteelle asetettava hinta
+     * @return virheilmoitus, null jos ok
+     */
+    public String setHinta(String s) {
+//       if ( !s.matches("[0-9]*.[0-9]*") ) return "Anna hinta numeroina";
+//       hinta = s;
+//       return null;
+//    }
+        String virhe ="";
+        
+        try {
+            hinta = Double.parseDouble(s.replace(',', '.'));
+        }
+        catch (NumberFormatException e){
+            virhe ="Anna hinta numeroina";
+            return virhe;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * @param s tuotteelle asetettava kuvaus
+     * @return virheilmoitus, null jos ok
+     */
+    public String setKuvaus(String s) {
+        kuvaus = s;
+        return null;
     }
     
     /**
@@ -113,7 +197,7 @@ public class Tuote {
      */
     public void taytaTuoteTiedoilla() {
         nimi = "potkukelkka " + rand(1000, 9999);
-        hinta = 40.00;
+        hinta = 50.00;
         kunto = "kelvollinen"; 
         myynninAlkuPvm = arvoPvm();
         myyty = false;
@@ -123,13 +207,13 @@ public class Tuote {
     @Override
     public String toString() {
         return "" + 
-                getTunnusNro() + "|" +
+                String.format("%03d", tunnusNro) + "|" +
                 nimi + "|" +
-                hinta + "€|" + 
+                String.format("%.2f", hinta) + "|" + 
                 kunto + "|" +
+                kuvaus + "|" +
                 myynninAlkuPvm + "|" +
-                myyty + "|" + 
-                kuvaus;
+                myyty;
     }
     
     /**
@@ -140,7 +224,7 @@ public class Tuote {
      *  Tuote tuote = new Tuote();
      *  tuote.parse("3  | potkukelkka | 20€");
      *  tuote.getTunnusNro() === 3;
-     *  tuote.toString().startsWith("3|potkukelkka|20.0€|") === true; 
+     *  tuote.toString().startsWith("003|potkukelkka|20,0|") === true; 
      *  tuote.rekisteroi();
      *  int n = tuote.getTunnusNro();
      *  tuote.parse("" + (n+20));
@@ -154,8 +238,8 @@ public class Tuote {
         nimi = Mjonot.erota(sb, '|', nimi);
         hinta = Mjonot.erota(sb, '|', hinta);
         kunto = Mjonot.erota(sb, '|', kunto);
-        myynninAlkuPvm = Mjonot.erota(sb, '|', myynninAlkuPvm);
         kuvaus = Mjonot.erota(sb, '|', kuvaus);
+        myynninAlkuPvm = Mjonot.erota(sb, '|', myynninAlkuPvm);
     }
     
     
@@ -169,22 +253,18 @@ public class Tuote {
         potkuKelkka.rekisteroi();
         potkuKelkka2.rekisteroi();
 
-        potkuKelkka.tulosta(System.out);
+        // potkuKelkka.tulosta(System.out);
         potkuKelkka.taytaTuoteTiedoilla();
-        potkuKelkka.tulosta(System.out);
+        // potkuKelkka.tulosta(System.out);
 
-        potkuKelkka2.tulosta(System.out);
+        // potkuKelkka2.tulosta(System.out);
         potkuKelkka2.taytaTuoteTiedoilla();
-        potkuKelkka2.tulosta(System.out);
+        // potkuKelkka2.tulosta(System.out);
+        System.out.println(potkuKelkka.toString());
+        System.out.println(potkuKelkka2.toString());
     }
 
 
-    /**
-     * @return tuotteen nimi
-     */
-    public String getNimi() {
-        
-        return nimi;
-    }
+   
 
 }

@@ -3,6 +3,7 @@ package fxHaksanna;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
@@ -23,23 +24,21 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
     @FXML private TextField editNimi;
     @FXML private TextField editHinta;
     @FXML private TextField editKunto;
+    @FXML private TextField editKuvaus;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
-        
+        alusta();
     }
 
     @Override
     public Tuote getResult() {
-        // TODO Auto-generated method stub
-        return null;
+        return tuoteKohdalla;
     }
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
-        
+        editNimi.requestFocus();
     }
 
     @Override
@@ -53,22 +52,85 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
     }
     
     @FXML private void handleOK() {
+        if ( tuoteKohdalla != null && tuoteKohdalla.getNimi().trim().equals("")) {
+            naytaVirhe("Nimi ei saa olla tyhjä");
+            return;
+        }
         ModalController.closeStage(labelVirhe);
     }
     
     @FXML private void handleCancel() {
+        tuoteKohdalla = null;
         ModalController.closeStage(labelVirhe);
     }
     
     // =====================================================================
 
     private Tuote tuoteKohdalla;
+    private TextField[] edits;
+    
+    private void alusta() {
+        edits = new TextField[] { editNimi, editHinta, editKunto, editKuvaus };
+        int i = 0;
+        // editNimi.setOnKeyReleased(e -> kasitteleNimi(editNimi)); Jos tehtäisiin erikseenkin
+        for (TextField edit : edits) {
+            final int k = ++i;
+            edit.setOnKeyReleased( e -> kasitteleMuutosTuotteeseen(k, edit));
+        }
+    }
+    
+    private void naytaVirhe(String virhe) {
+        if (virhe == null || virhe.isEmpty()) {
+            labelVirhe.setText("");
+            labelVirhe.getStyleClass().removeAll("virhe");
+            return;
+        }
+        labelVirhe.setText(virhe);
+        labelVirhe.getStyleClass().add("virhe");
+    }
+    
+    private void kasitteleMuutosTuotteeseen(int k, TextField edit) {
+        if (tuoteKohdalla == null) return;
+        String s = edit.getText();
+        String virhe = null;
+        switch (k) {
+        case 1 : virhe = tuoteKohdalla.setNimi(s); break;
+        case 2 : virhe = tuoteKohdalla.setHinta(s); break;
+        case 3 : virhe = tuoteKohdalla.setKunto(s); break;
+        case 4 : virhe = tuoteKohdalla.setKuvaus(s); break;
+        default:
+        }
+        if (virhe == null) {
+            Dialogs.setToolTipText(edit, "");
+            edit.getStyleClass().removeAll("virhe");
+            naytaVirhe(virhe);
+        } else {
+            Dialogs.setToolTipText(edit, virhe);
+            edit.getStyleClass().add("virhe");
+            naytaVirhe(virhe);
+            
+        }
+    }
+
     
     private void naytaTuote(Tuote tuote) {
         if (tuote == null) return;
-        editNimi.setText(tuote.getNimi());
+        naytaTuote(edits, tuote);
     }
     
+    /**
+     * Näytetään tuotteen tiedot TextField komponentteihin
+     * @param edits taulukko jossa tekstikenttiä
+     * @param tuote näytettävä tuote
+     */
+    public static void naytaTuote(TextField[] edits, Tuote tuote) {
+        if (tuote == null) return;
+        edits[0].setText(tuote.getNimi());
+        edits[1].setText(tuote.getHinta());
+        edits[2].setText(tuote.getKunto());
+        edits[3].setText(tuote.getKuvaus());
+    }
+
     /**
      * Luodaan tuotteen kysymisdialogi ja palautetaan sama tietue muutettuna 
      * TODO: korjattava toimimaan
@@ -81,5 +143,7 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
      return ModalController.showModal(HaksannaGUIController.class.getResource("MuokkaaTuotetta.fxml"), "Muokkaa tuotetta", modalityStage, oletus);
 
     }
+
+
 
 }

@@ -42,6 +42,9 @@ public class Liitokset {
         }
     }
     
+    /**
+     * @return liitosten lukumäärän
+     */
     public int getLkm() {
         return alkiot.size();
     }

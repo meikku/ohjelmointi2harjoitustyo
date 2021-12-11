@@ -22,7 +22,6 @@ import java.util.Scanner;
 public class Kategoriat {
 
     private Collection<Kategoria> alkiot = new ArrayList<Kategoria>();  
-    private String tiedostonPerusNimi = "kategoriat";
     
     /**
      * Alustaminen

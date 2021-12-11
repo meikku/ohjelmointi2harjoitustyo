@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Font;
+import javafx.scene.control.TextField;
 import kirppis.Kategoria;
 import kirppis.Liitos;
 import kirppis.MyyntiPaikka;
@@ -70,22 +70,26 @@ public class HaksannaGUIController implements Initializable{
     @FXML private ScrollPane panelTuote;
     @FXML private TextArea tuotteenKat;
     @FXML private ListChooser<Kategoria> chooserKategoriat;
+    @FXML private TextField editNimi;
+    @FXML private TextField editHinta;
+    @FXML private TextField editKunto;
+    @FXML private TextField editKuvaus;
     
-// -----------------------------
+// =========================================
     private MyyntiPaikka myyntiPaikka;
     private String myyntiPaikanNimi = "kirppis";
     private Tuote tuoteKohdalla;
-    private TextArea areaTuote = new TextArea(); // TODO: poista myöhemmin
-    
+    private TextField[] edits;
+     
     
     private void alusta() {
-        panelTuote.setContent(areaTuote);
-        areaTuote.setFont(new Font("Courier New", 12));
         panelTuote.setFitToHeight(true);
         panelTuote.setFitToWidth(true);
         chooserTuotteet.clear();
         chooserTuotteet.addSelectionListener(e -> naytaTuote());
         chooserKategoriat.clear();
+        
+        edits = new TextField[] { editNimi, editHinta, editKunto, editKuvaus };
     }
     
     private void lisaaKategoria() {
@@ -94,8 +98,22 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void muokkaaTuote() {
-        TuoteDialogController.kysyTuote(null, tuoteKohdalla);
+        
+        if (tuoteKohdalla == null) return;
+        Tuote tuote;
+        try {
+            tuote = tuoteKohdalla.clone();
+            tuote = TuoteDialogController.kysyTuote(null, tuoteKohdalla);
+            if (tuote == null) return;
+            myyntiPaikka.korvaaTaiLisaa(tuote);
+            hae(tuote.getTunnusNro());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        // } catch (SailoException e) {
+        //    e.printStackTrace();
+        }
     }
+    
     
     private void lisaaTuote() {
         //ModalController.showModal(HaksannaGUIController.class.getResource("LisaaTuote.fxml"), "Lisää tuote", null, "");
@@ -126,6 +144,7 @@ public class HaksannaGUIController implements Initializable{
     private void naytaTuotteenKat() {
         
         tuotteenKat.setText("");
+        if (tuoteKohdalla == null) return;
         tuoteKohdalla = chooserTuotteet.getSelectedObject();
         List<Kategoria> tuoteKat = myyntiPaikka.annaKategoriat(tuoteKohdalla);
 
@@ -182,13 +201,8 @@ public class HaksannaGUIController implements Initializable{
     
     private void naytaTuote() {
         tuoteKohdalla = chooserTuotteet.getSelectedObject();
-        
-        if (tuoteKohdalla == null) return;
-        
-        areaTuote.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaTuote)) {
-                tuoteKohdalla.tulosta(os);
-        }
+        if (tuoteKohdalla == null) return;        
+        TuoteDialogController.naytaTuote(edits, tuoteKohdalla);
         naytaTuotteenKat();
     }
     
@@ -196,21 +210,21 @@ public class HaksannaGUIController implements Initializable{
    
     
 
-    /*
+    /**
      * Lisätään myyntipaikkaan uusi tuote
      */
-    private void uusiTuote() {
-        Tuote uusi = new Tuote();
-        uusi.rekisteroi();
-        uusi.taytaTuoteTiedoilla(); // TODO: korvaa dialogilla aikanaan
-        
+    protected void uusiTuote() {
         try {
+            Tuote uusi = new Tuote();
+            uusi = TuoteDialogController.kysyTuote(null, uusi);
+            if (uusi == null) return;
+            uusi.rekisteroi();
             myyntiPaikka.lisaa(uusi);
+            hae(uusi.getTunnusNro());
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
             return;
         }
-        hae(uusi.getTunnusNro());
     }
     
 //    private void setTitle(String title) {

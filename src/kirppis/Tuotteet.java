@@ -27,6 +27,7 @@ public class Tuotteet implements Cloneable{
     private static final int MAX_TUOTTEITA = 5;
     private int lkm = 0;
     private Tuote[] alkiot;
+    private boolean muutettu = false;
     
     /**
      * Luodaan alustava taulukko
@@ -64,6 +65,22 @@ public class Tuotteet implements Cloneable{
         
         this.alkiot[this.lkm] = tuote;
         this.lkm++;
+        muutettu = true;
+    }
+    
+    /**
+     * @param tuote tuote joka korvataan tai joka lisätään
+     */
+    public void korvaaTaiLisaa(Tuote tuote) {
+        int id = tuote.getTunnusNro();
+        for (int i= 0; i <lkm; i++) {
+            if (alkiot[i].getTunnusNro() == id) {
+                alkiot[i] = tuote;
+                muutettu = true;
+                return;
+            }
+        }
+        lisaa(tuote);
     }
     
     /**
@@ -94,10 +111,12 @@ public class Tuotteet implements Cloneable{
      * 2|potkukelkka|25€|hyväkuntoinen|23.05.2015|myyty|punainen ja sievä|
      * 3|kesämekko|10€|käyttämätön|12.08.2019|ei myyty|sinikeltainen|
      * </pre>
-     * @param tied tilapäisesti näin TODO
+     * @param tied hakemiston nimi johon tallennetaan
      * @throws SailoException jos tallennus ei onnistu
      */
     public void tallenna(String tied) throws SailoException {
+        if ( !muutettu ) return;
+        
         File ftied = new File(tied + "/tuotteet.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (int i = 0; i < getLkm(); i++) {
@@ -128,6 +147,7 @@ public class Tuotteet implements Cloneable{
                 tuote.parse(s); // voisi palauttaa jotakin?
                 lisaa(tuote);
             }
+            muutettu = false;
         } catch ( FileNotFoundException e ) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
 //        } catch ( IOException e ) {

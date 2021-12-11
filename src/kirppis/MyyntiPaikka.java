@@ -30,6 +30,14 @@ public class MyyntiPaikka {
        tuotteet.lisaa(tuote);
     }
     
+
+    /**
+     * @param tuote joka korvaa vanhan tai lisätään uutena
+     */
+    public void korvaaTaiLisaa(Tuote tuote) {
+        tuotteet.korvaaTaiLisaa(tuote);
+    }
+
     
     /**
      * Lisätään uusi kategoria
@@ -154,9 +162,8 @@ public class MyyntiPaikka {
         MyyntiPaikka myyntiPaikka = new MyyntiPaikka();
         try {
             myyntiPaikka.lueTiedostosta("kirppis");
-        } catch (SailoException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+        } catch (SailoException e) {
+            e.printStackTrace();
         }
 
         Tuote potkuKelkka = new Tuote();
@@ -189,5 +196,6 @@ public class MyyntiPaikka {
             tuote.tulosta(System.out);
         }
     }
+
 
 }
