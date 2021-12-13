@@ -268,8 +268,9 @@ public class HaksannaGUIController implements Initializable{
     public boolean avaa() {
         // ModalController.showModal(HaksannaGUIController.class.getResource("KaynnistysIkkuna.fxml"), "Myyntitilasto", null, "");
         String uusiNimi = KaynnistysIkkunaController.kysyNimi(null, myyntiPaikanNimi);
-        if (uusiNimi == null) return false;
-        lueTiedosto(uusiNimi);
+        if (uusiNimi == null || "".equals(uusiNimi)) return false;
+        String aukeaa = lueTiedosto(uusiNimi); 
+        if (aukeaa != null) avaa();
         return true;
     }
     
