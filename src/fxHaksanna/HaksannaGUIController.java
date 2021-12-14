@@ -31,10 +31,7 @@ public class HaksannaGUIController implements Initializable{
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
     }
-
-    @FXML void handleLisaaKategoria() {
-        lisaaKategoria();
-    }
+   
 
     @FXML void handleMuokkaaTuote() {
         muokkaaTuote();
@@ -55,6 +52,14 @@ public class HaksannaGUIController implements Initializable{
     
     @FXML void handleUusiKategoria() {
         uusiKategoria();
+    }
+    
+    @FXML void handleMuokkaaKategoria() {
+        muokkaaKategoria();
+    }
+
+    @FXML void handleLiitaKategoria() {
+        liitaKategoria();
     }
     
     @FXML void handleAvaa() {
@@ -79,6 +84,7 @@ public class HaksannaGUIController implements Initializable{
     private MyyntiPaikka myyntiPaikka;
     private String myyntiPaikanNimi = "kirppis";
     private Tuote tuoteKohdalla;
+    private Kategoria katKohdalla;
     private TextField[] edits;
      
     
@@ -92,7 +98,7 @@ public class HaksannaGUIController implements Initializable{
         edits = new TextField[] { editNimi, editHinta, editKunto, editKuvaus };
     }
     
-    private void lisaaKategoria() {
+    private void liitaKategoria() {
         // ModalController.showModal(HaksannaGUIController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Muokkaa kategorioita", null, "");
         tuotteenKategoria();
     }
@@ -114,6 +120,11 @@ public class HaksannaGUIController implements Initializable{
         }
     }
     
+    private void muokkaaKategoria() {
+        katKohdalla = chooserKategoriat.getSelectedObject();
+        if (katKohdalla == null) return;
+        ModalController.showModal(KatDialogController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Kategoria", null, katKohdalla);
+    }
     
     private void lisaaTuote() {
         //ModalController.showModal(HaksannaGUIController.class.getResource("LisaaTuote.fxml"), "Lisää tuote", null, "");
@@ -128,7 +139,7 @@ public class HaksannaGUIController implements Initializable{
     
     private void tuotteenKategoria() {
         tuotteenKat.setText("");
-        Kategoria katKohdalla = chooserKategoriat.getSelectedObject();
+        katKohdalla = chooserKategoriat.getSelectedObject();
         tuoteKohdalla = chooserTuotteet.getSelectedObject();
         
         if (katKohdalla == null || tuoteKohdalla == null) return;

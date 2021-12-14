@@ -100,6 +100,13 @@ public class Kategoria {
         return nimi;
     }
     
+    /**
+     * Palauttaa kategorian kuvauksen
+     * @return kategorian kuvaus
+     */
+    public String getKuvaus() {
+        return kuvaus;
+    }
 
     
     /**

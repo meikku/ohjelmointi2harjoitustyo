@@ -37,8 +37,8 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleLisaaTuote" text="Lisää tuote" />
                   <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaTuote" text="Muokkaa tuotetta" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleLisaaKategoria" text="Lisää kategoria" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleLisaaKategoria" text="Muokkaa kategoriaa" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiKategoria" text="Uusi kategoria" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaKategoria" text="Muokkaa kategoriaa" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Info">
@@ -247,7 +247,7 @@
          <right>
             <HBox prefHeight="62.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleLisaaKategoria" text="Lisää kategoria">
+                  <Button mnemonicParsing="false" onAction="#handleLiitaKategoria" text="Liitä kategoria">
                      <font>
                         <Font size="14.0" />
                      </font>
