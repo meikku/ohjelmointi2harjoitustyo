@@ -22,6 +22,7 @@ import java.util.Scanner;
 public class Kategoriat {
 
     private Collection<Kategoria> alkiot = new ArrayList<Kategoria>();  
+    private boolean muutettu = false;
     
     /**
      * Alustaminen
@@ -36,6 +37,21 @@ public class Kategoriat {
      */
     public void lisaa(Kategoria kat) {
         alkiot.add(kat);
+        muutettu = true;
+    }
+    
+    /**
+     * @param kat kategoria jolla korvataan vanha tai joka lisätään
+     */
+    public void korvaaTaiLisaa(Kategoria kat) {
+        for (Kategoria kategoria : alkiot) {
+            if (kategoria.getTunnusNro() == kat.getTunnusNro()) {
+                kategoria = kat;
+                muutettu = true;
+                return;
+            }
+        }
+        lisaa(kat);
     }
     
     /**
@@ -80,6 +96,7 @@ public class Kategoriat {
      * @throws SailoException jos tallennus ei onnistu
      */
     public void tallenna(String tied) throws SailoException {
+        if ( !muutettu ) return;
         File ftied = new File(tied + "/kategoriat.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (Kategoria kat : alkiot) {
@@ -107,6 +124,7 @@ public class Kategoriat {
                 kat.parse(s); 
                 lisaa(kat);
             }
+            muutettu = false;
         } catch ( FileNotFoundException e ) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
         }

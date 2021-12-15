@@ -48,6 +48,13 @@ public class MyyntiPaikka {
     }
     
     /**
+     * @param kat kategoria joka korvaa vanhan tai lisätään uutena
+     */
+    public void korvaaTaiLisaaKat(Kategoria kat) {
+        kategoriat.korvaaTaiLisaa(kat);
+    }
+    
+    /**
      * Lisätään uusi liitos
      * @param lts liitos
      */

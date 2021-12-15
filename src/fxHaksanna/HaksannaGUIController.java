@@ -51,7 +51,7 @@ public class HaksannaGUIController implements Initializable{
     }
     
     @FXML void handleUusiKategoria() {
-        uusiKategoria();
+        uusiKat();
     }
     
     @FXML void handleMuokkaaKategoria() {
@@ -123,16 +123,22 @@ public class HaksannaGUIController implements Initializable{
     private void muokkaaKategoria() {
         katKohdalla = chooserKategoriat.getSelectedObject();
         if (katKohdalla == null) return;
-        ModalController.showModal(KatDialogController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Kategoria", null, katKohdalla);
+        Kategoria kat;
+        try {
+            kat = katKohdalla.clone();
+            kat = KatDialogController.kysyKat(null, katKohdalla);
+            if (kat == null) return;
+            myyntiPaikka.korvaaTaiLisaaKat(kat);
+            hae(kat.getTunnusNro());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        
     }
     
     private void lisaaTuote() {
         //ModalController.showModal(HaksannaGUIController.class.getResource("LisaaTuote.fxml"), "Lisää tuote", null, "");
         uusiTuote();
-    }
-    
-    private void uusiKategoria() {
-        uusiKat();
     }
     
     
@@ -202,12 +208,13 @@ public class HaksannaGUIController implements Initializable{
      */
     private void uusiKat() {
         Kategoria uusi = new Kategoria();
+        uusi = KatDialogController.kysyKat(null, uusi);
+        if (uusi == null) return;
         uusi.rekisteroi();
-        uusi.taytaKatTiedoilla(); // TODO: korvaa dialogilla aikanaan
+        // uusi.taytaKatTiedoilla(); // TODO: korvaa dialogilla aikanaan
         myyntiPaikka.lisaa(uusi);
         haeKat(uusi.getTunnusNro());
     }
-
     
     
     private void naytaTuote() {
@@ -216,9 +223,6 @@ public class HaksannaGUIController implements Initializable{
         TuoteDialogController.naytaTuote(edits, tuoteKohdalla);
         naytaTuotteenKat();
     }
-    
-    
-   
     
 
     /**

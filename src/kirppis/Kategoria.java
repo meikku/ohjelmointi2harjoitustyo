@@ -16,7 +16,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @author meikk
  * @version 2.11.2021
  */
-public class Kategoria {
+public class Kategoria implements Cloneable {
     
     private int tunnusNro;
     private String nimi = "";
@@ -32,7 +32,12 @@ public class Kategoria {
         // vielä tyhjä
     }
     
-   
+    @Override
+    public Kategoria clone() throws CloneNotSupportedException {
+        Kategoria uusi;
+        uusi = (Kategoria) super.clone();
+        return uusi;
+    }
     
     
     /**

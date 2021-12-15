@@ -65,19 +65,19 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
 //        editKategoria.setText(katKohdalla.getNimi());
 //        editKuvaus.setText(katKohdalla.getKuvaus());
     }
-    /**
-     * Tyhjennetään tekstikentät
-     */
-    public void tyhjenna() {
-        editKategoria.setText("");
-        editKuvaus.setText("");
-    }
+//    /**
+//     * Tyhjennetään tekstikentät
+//     */
+//    public void tyhjenna() {
+//        editKategoria.setText("");
+//        editKuvaus.setText("");
+//    }
     
     /**
      * Näytetään kategorian tiedot 
      * @param kat näytettävä kategoria
      */
-    public void naytaKategoria(Kategoria kat) {
+    private void naytaKategoria(Kategoria kat) {
         if (kat == null) return;
         editKategoria.setText(kat.getNimi());
         editKuvaus.setText(kat.getKuvaus());
@@ -91,7 +91,7 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
     public static Kategoria kysyKat(Stage modalityStage, Kategoria oletus) {
         return ModalController.showModal(
                 KatDialogController.class.getResource("LisaaMuokkaaKategoria.fxml"), 
-                "Kategoria", modalityStage, oletus, null);
+                "Kategoria", modalityStage, oletus);
     }
 
 }
