@@ -79,6 +79,8 @@ public class HaksannaGUIController implements Initializable{
     @FXML private TextField editHinta;
     @FXML private TextField editKunto;
     @FXML private TextField editKuvaus;
+    @FXML private TextField editKategoria;
+    @FXML private TextField editKatKuvaus;
     
 // =========================================
     private MyyntiPaikka myyntiPaikka;
@@ -86,6 +88,7 @@ public class HaksannaGUIController implements Initializable{
     private Tuote tuoteKohdalla;
     private Kategoria katKohdalla;
     private TextField[] edits;
+    private TextField[] editsKat;
      
     
     private void alusta() {
@@ -94,8 +97,10 @@ public class HaksannaGUIController implements Initializable{
         chooserTuotteet.clear();
         chooserTuotteet.addSelectionListener(e -> naytaTuote());
         chooserKategoriat.clear();
+        chooserKategoriat.addSelectionListener(e -> naytaKat());
         
         edits = new TextField[] { editNimi, editHinta, editKunto, editKuvaus };
+        editsKat = new TextField[] { editKategoria, editKatKuvaus };
     }
     
     private void liitaKategoria() {
@@ -224,6 +229,14 @@ public class HaksannaGUIController implements Initializable{
         naytaTuotteenKat();
     }
     
+    /**
+     * Näyttää listasta valitun kategorian tiedot
+     */
+    protected void naytaKat() {
+        katKohdalla = chooserKategoriat.getSelectedObject();
+        if (katKohdalla == null) return;
+        KatDialogController.naytaKategoria(editsKat, katKohdalla);
+    }
 
     /**
      * Lisätään myyntipaikkaan uusi tuote

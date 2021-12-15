@@ -23,7 +23,7 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
     
     
     @FXML private TextField editKategoria;
-    @FXML private TextField editKuvaus; 
+    @FXML private TextField editKatKuvaus; 
     @FXML private Label labelVirhe;
     
     @Override
@@ -60,10 +60,10 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
     // ====================================================================
     
     private Kategoria katKohdalla;
+    private TextField[] edits;
     
     private void alusta() {
-//        editKategoria.setText(katKohdalla.getNimi());
-//        editKuvaus.setText(katKohdalla.getKuvaus());
+        edits = new TextField[] { editKategoria, editKatKuvaus };
     }
 //    /**
 //     * Tyhjennetään tekstikentät
@@ -73,14 +73,21 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
 //        editKuvaus.setText("");
 //    }
     
-    /**
-     * Näytetään kategorian tiedot 
-     * @param kat näytettävä kategoria
-     */
+    
     private void naytaKategoria(Kategoria kat) {
         if (kat == null) return;
-        editKategoria.setText(kat.getNimi());
-        editKuvaus.setText(kat.getKuvaus());
+        naytaKategoria(edits, kat);
+    }
+    /**
+     * Näytetään kategorian tiedot 
+     * @param edits taulukko jossa tekstikenttiä
+     * @param kat näytettävä kategoria
+     */
+    public static void naytaKategoria(TextField[] edits, Kategoria kat) {
+        if (kat == null) return;
+        edits[0].setText(kat.getNimi());
+        edits[1].setText(kat.getKuvaus());
+        
     }
     /**
      * Luodaan kysymisdialogi ja palautetaan sama tietue muutettuna
