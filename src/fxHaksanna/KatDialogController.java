@@ -3,6 +3,7 @@ package fxHaksanna;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
@@ -52,7 +53,7 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
     }
     
     @FXML private void handleCancel() {
-        // katKohdalla = null; 
+        katKohdalla = null; 
         ModalController.closeStage(labelVirhe);
     }
 
@@ -64,6 +65,11 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
     
     private void alusta() {
         edits = new TextField[] { editKategoria, editKatKuvaus };
+        int i = 0;
+        for (TextField edit : edits) {
+            final int k = ++i;
+            edit.setOnKeyReleased(e -> kasitteleMuutosKategoriaan(k, edit));
+        }
     }
 //    /**
 //     * Tyhjennetään tekstikentät
@@ -73,9 +79,38 @@ public class KatDialogController implements ModalControllerInterface<Kategoria>,
 //        editKuvaus.setText("");
 //    }
     
+    private void naytaVirhe(String virhe) {
+        if (virhe == null || virhe.isEmpty()) {
+            labelVirhe.setText("");
+            labelVirhe.getStyleClass().removeAll("virhe");
+            return;
+        }
+        labelVirhe.setText(virhe);
+        labelVirhe.getStyleClass().add("virhe");
+    }
+    
+    private void kasitteleMuutosKategoriaan(int k, TextField edit) {
+        if (katKohdalla == null) return;
+        String s = edit.getText();
+        String virhe = null;
+        switch (k) {
+        case 1 : virhe = katKohdalla.setNimi(s); break;
+        case 2 : virhe = katKohdalla.setKuvaus(s); break;
+        default:
+        }
+        if (virhe == null) {
+            Dialogs.setToolTipText(edit, "");
+            edit.getStyleClass().removeAll("virhe");
+            naytaVirhe(virhe);
+        } else {
+            Dialogs.setToolTipText(edit, virhe);
+            edit.getStyleClass().add("virhe");
+            naytaVirhe(virhe);
+            
+        }
+    }
     
     private void naytaKategoria(Kategoria kat) {
-        if (kat == null) return;
         naytaKategoria(edits, kat);
     }
     /**

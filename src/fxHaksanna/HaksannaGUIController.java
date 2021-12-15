@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import kirppis.Kategoria;
+import kirppis.Kategoriat;
 import kirppis.Liitos;
 import kirppis.MyyntiPaikka;
 import kirppis.SailoException;
@@ -126,7 +127,7 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void muokkaaKategoria() {
-        katKohdalla = chooserKategoriat.getSelectedObject();
+
         if (katKohdalla == null) return;
         Kategoria kat;
         try {
@@ -146,6 +147,35 @@ public class HaksannaGUIController implements Initializable{
         uusiTuote();
     }
     
+    /**
+     * Lisätään myyntipaikkaan uusi tuote
+     */
+    protected void uusiTuote() {
+        try {
+            Tuote uusi = new Tuote();
+            uusi = TuoteDialogController.kysyTuote(null, uusi);
+            if (uusi == null) return;
+            uusi.rekisteroi();
+            myyntiPaikka.lisaa(uusi);
+            hae(uusi.getTunnusNro());
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
+            return;
+        }
+    }
+    
+    /**
+     * Lisätään myyntipaikkaan uusi kategoria
+     */
+    protected void uusiKat() {
+        Kategoria uusi = new Kategoria();
+        uusi = KatDialogController.kysyKat(null, uusi);
+        if (uusi == null) return;
+        uusi.rekisteroi();
+        myyntiPaikka.lisaa(uusi);
+        //haeKat(uusi.getTunnusNro());
+        haeKaikkiKat();
+    }
     
     
     private void tuotteenKategoria() {
@@ -179,6 +209,7 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void haeKaikkiKat() {
+        chooserKategoriat.clear();
         for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
             
             chooserKategoriat.add(kat.getNimi(), kat);
@@ -187,8 +218,9 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void haeKat(int knro) {
-         
+        // chooserKategoriat.clear(); 
         for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
+            
             if (kat.getTunnusNro() == knro)
             
             chooserKategoriat.add(kat.getNimi(), kat);
@@ -208,18 +240,7 @@ public class HaksannaGUIController implements Initializable{
         chooserTuotteet.setSelectedIndex(index); // tästä tulee muutosviesti
     }
     
-    /*
-     * Lisätään myyntipaikkaan uusi kategoria
-     */
-    private void uusiKat() {
-        Kategoria uusi = new Kategoria();
-        uusi = KatDialogController.kysyKat(null, uusi);
-        if (uusi == null) return;
-        uusi.rekisteroi();
-        // uusi.taytaKatTiedoilla(); // TODO: korvaa dialogilla aikanaan
-        myyntiPaikka.lisaa(uusi);
-        haeKat(uusi.getTunnusNro());
-    }
+    
     
     
     private void naytaTuote() {
@@ -238,22 +259,7 @@ public class HaksannaGUIController implements Initializable{
         KatDialogController.naytaKategoria(editsKat, katKohdalla);
     }
 
-    /**
-     * Lisätään myyntipaikkaan uusi tuote
-     */
-    protected void uusiTuote() {
-        try {
-            Tuote uusi = new Tuote();
-            uusi = TuoteDialogController.kysyTuote(null, uusi);
-            if (uusi == null) return;
-            uusi.rekisteroi();
-            myyntiPaikka.lisaa(uusi);
-            hae(uusi.getTunnusNro());
-        } catch (SailoException e) {
-            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
-            return;
-        }
-    }
+    
     
 //    private void setTitle(String title) {
 //        ModalController.getStage(hakuehto).setTitle(title);

@@ -27,7 +27,7 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
     @FXML private TextField editKuvaus;
     
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(URL url, ResourceBundle bundle) {
         alusta();
     }
 
@@ -114,7 +114,6 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
 
     
     private void naytaTuote(Tuote tuote) {
-        if (tuote == null) return;
         naytaTuote(edits, tuote);
     }
     

@@ -112,6 +112,25 @@ public class Kategoria implements Cloneable {
     public String getKuvaus() {
         return kuvaus;
     }
+    
+    /**
+     * @param s asetettava nimi
+     * @return virhe, jos nimi on tyhjä, muuten null
+     */
+    public String setNimi(String s) {
+        if ("".equals(s) || s == null) return "Nimi ei saa olla tyhjä";
+        nimi = s;
+        return null;
+    }
+    
+    /**
+     * @param s asetettava kuvaus
+     * @return null
+     */
+    public String setKuvaus(String s) {
+        kuvaus = s;
+        return null;
+    }
 
     
     /**
