@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import fi.jyu.mit.fxgui.ComboBoxChooser?>
 <?import fi.jyu.mit.fxgui.ListChooser?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -8,7 +9,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -63,22 +63,23 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <TextField>
+            <Label fx:id="labelVirhe" text="">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Label>
+            <TextField fx:id="hakuEhto" onKeyReleased="#handleHakuEhto">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <MenuButton mnemonicParsing="false" text="Tuote">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Hinta" />
-                  <MenuItem mnemonicParsing="false" text="Myynnin aloituspäivä" />
-                <MenuItem mnemonicParsing="false" text="Tuotekategoria" />
-              </items>
+            <ComboBoxChooser fx:id="cbKentat" onAction="#handleHakuEhto" rivit="Tuotteen nimi&#10;Hinta&#10;Kategoria&#10;">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </MenuButton>
-            <ListChooser fx:id="chooserTuotteet" />
+               </VBox.margin></ComboBoxChooser>
+            <ListChooser fx:id="chooserTuotteet">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></ListChooser>
          </children>
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" top="10.0" />

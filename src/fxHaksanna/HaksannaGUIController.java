@@ -5,17 +5,18 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.ComboBoxChooser;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import kirppis.Kategoria;
-import kirppis.Kategoriat;
 import kirppis.Liitos;
 import kirppis.MyyntiPaikka;
 import kirppis.SailoException;
@@ -32,7 +33,12 @@ public class HaksannaGUIController implements Initializable{
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
     }
-   
+    
+    @FXML void handleHakuEhto() {
+        if (tuoteKohdalla != null ) {
+            hae(tuoteKohdalla.getTunnusNro());
+        }
+    }
 
     @FXML void handleMuokkaaTuote() {
         muokkaaTuote();
@@ -82,6 +88,9 @@ public class HaksannaGUIController implements Initializable{
     @FXML private TextField editKuvaus;
     @FXML private TextField editKategoria;
     @FXML private TextField editKatKuvaus;
+    @FXML private TextField hakuEhto;
+    @FXML private ComboBoxChooser<String> cbKentat;
+    @FXML private Label labelVirhe;
     
 // =========================================
     private MyyntiPaikka myyntiPaikka;
@@ -90,6 +99,7 @@ public class HaksannaGUIController implements Initializable{
     private Kategoria katKohdalla;
     private TextField[] edits;
     private TextField[] editsKat;
+    
      
     
     private void alusta() {
@@ -229,6 +239,12 @@ public class HaksannaGUIController implements Initializable{
     } 
     
     private void hae(int tnro) {
+        int k = cbKentat.getSelectionModel().getSelectedIndex();
+        String ehto = hakuEhto.getText();
+        if (k > 0 || ehto.length()> 0)
+            naytaVirhe(String.format("Ei osata hakea (kenttä: %d, ehto: %s)", k, ehto));
+        else naytaVirhe(null);
+        
         chooserTuotteet.clear();
         
         int index = 0;
@@ -240,7 +256,15 @@ public class HaksannaGUIController implements Initializable{
         chooserTuotteet.setSelectedIndex(index); // tästä tulee muutosviesti
     }
     
-    
+    private void naytaVirhe(String virhe) {
+        if ( virhe == null || virhe.isEmpty() ) {
+            labelVirhe.setText("");
+            labelVirhe.getStyleClass().removeAll("virhe");
+            return;
+        }
+        labelVirhe.setText(virhe);
+        labelVirhe.getStyleClass().add("virhe");
+    }
     
     
     private void naytaTuote() {
