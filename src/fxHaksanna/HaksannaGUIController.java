@@ -35,9 +35,7 @@ public class HaksannaGUIController implements Initializable{
     }
     
     @FXML void handleHakuEhto() {
-        if (tuoteKohdalla != null ) {
-            hae(tuoteKohdalla.getTunnusNro());
-        }
+       hae(0);
     }
 
     @FXML void handleMuokkaaTuote() {
@@ -109,13 +107,13 @@ public class HaksannaGUIController implements Initializable{
         chooserTuotteet.addSelectionListener(e -> naytaTuote());
         chooserKategoriat.clear();
         chooserKategoriat.addSelectionListener(e -> naytaKat());
+        cbKentat.getSelectionModel().select(0);
         
         edits = new TextField[] { editNimi, editHinta, editKunto, editKuvaus };
         editsKat = new TextField[] { editKategoria, editKatKuvaus };
     }
     
-    private void liitaKategoria() {
-        // ModalController.showModal(HaksannaGUIController.class.getResource("LisaaMuokkaaKategoria.fxml"), "Muokkaa kategorioita", null, "");
+    private void liitaKategoria() {     
         tuotteenKategoria();
     }
     
@@ -131,8 +129,6 @@ public class HaksannaGUIController implements Initializable{
             hae(tuote.getTunnusNro());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
-        // } catch (SailoException e) {
-        //    e.printStackTrace();
         }
     }
     
@@ -227,45 +223,43 @@ public class HaksannaGUIController implements Initializable{
         
     }
     
-    private void haeKat(int knro) {
-        // chooserKategoriat.clear(); 
-        for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
-            
-            if (kat.getTunnusNro() == knro)
-            
-            chooserKategoriat.add(kat.getNimi(), kat);
-        }
-        chooserKategoriat.setSelectedIndex(knro);
-    } 
+//    private void haeKat(int knro) {
+//        // chooserKategoriat.clear(); 
+//        for (Kategoria kat : myyntiPaikka.annaKaikkiKat()) {
+//            
+//            if (kat.getTunnusNro() == knro)
+//            
+//            chooserKategoriat.add(kat.getNimi(), kat);
+//        }
+//        chooserKategoriat.setSelectedIndex(knro);
+//    } 
     
     private void hae(int tnro) {
-        int k = cbKentat.getSelectionModel().getSelectedIndex();
-        String ehto = hakuEhto.getText();
-        if (k > 0 || ehto.length()> 0)
-            naytaVirhe(String.format("Ei osata hakea (kenttä: %d, ehto: %s)", k, ehto));
-        else naytaVirhe(null);
         
         chooserTuotteet.clear();
-        
         int index = 0;
+        String ehto = hakuEhto.getText();
+        if (ehto == null || "".equals(ehto)) {
+        
         for (int i = 0; i < myyntiPaikka.getTuotteet(); i++) {
             Tuote tuote = myyntiPaikka.annaTuote(i);
             if (tuote.getTunnusNro() == tnro) index = i;
             chooserTuotteet.add(tuote.getNimi(), tuote);
         }
+        }
+        
+        else {
+            for (int i = 0; i <myyntiPaikka.getTuotteet(); i++) {
+                Tuote tuote = myyntiPaikka.annaTuote(i);
+                if (tuote.getNimi().contains(ehto)) {
+                    chooserTuotteet.add(tuote.getNimi(), tuote);
+                }
+            }
+        }
+        
         chooserTuotteet.setSelectedIndex(index); // tästä tulee muutosviesti
     }
-    
-    private void naytaVirhe(String virhe) {
-        if ( virhe == null || virhe.isEmpty() ) {
-            labelVirhe.setText("");
-            labelVirhe.getStyleClass().removeAll("virhe");
-            return;
-        }
-        labelVirhe.setText(virhe);
-        labelVirhe.getStyleClass().add("virhe");
-    }
-    
+
     
     private void naytaTuote() {
         tuoteKohdalla = chooserTuotteet.getSelectedObject();
@@ -283,11 +277,6 @@ public class HaksannaGUIController implements Initializable{
         KatDialogController.naytaKategoria(editsKat, katKohdalla);
     }
 
-    
-    
-//    private void setTitle(String title) {
-//        ModalController.getStage(hakuehto).setTitle(title);
-//    }
     
     /**
      * @param nimi tiedosto josta myyntipaikan tiedot luetaan
@@ -352,7 +341,7 @@ public class HaksannaGUIController implements Initializable{
     }
     
     private void naytaKategoriaKuvaukset() {
-        Dialogs.showMessageDialog("Kategorioiden kuvaukset tulossa pian...");
+        Dialogs.showMessageDialog("Kategorioiden kuvaukset tulossa...");
     }  
 
     /**

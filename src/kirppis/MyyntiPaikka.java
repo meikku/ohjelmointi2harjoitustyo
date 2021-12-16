@@ -38,7 +38,6 @@ public class MyyntiPaikka {
         tuotteet.korvaaTaiLisaa(tuote);
     }
 
-    
     /**
      * Lisätään uusi kategoria
      * @param kat lisättävä kategoria

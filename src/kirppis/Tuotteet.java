@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-// import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -135,10 +134,8 @@ public class Tuotteet implements Cloneable{
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        //setTiedostonPerusNimi(tied);
-        // File ftied = new File(hakemisto);
         String nimi = hakemisto + "/tuotteet.dat";
-        File ftied = new File(nimi); // TODO muuta tämä
+        File ftied = new File(nimi); 
         try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
             while ( fi.hasNext() ) {
                 String s = "";
@@ -150,12 +147,9 @@ public class Tuotteet implements Cloneable{
             muutettu = false;
         } catch ( FileNotFoundException e ) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
-//        } catch ( IOException e ) {
-//            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
         }
     }
 
-    
 
     /**
      * @param args ei käytössä
