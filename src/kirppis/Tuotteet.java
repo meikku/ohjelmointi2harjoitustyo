@@ -83,6 +83,35 @@ public class Tuotteet implements Cloneable{
     }
     
     /**
+     * Poistetaan annettu tuote taulukosta
+     * @param id poistettavan tuotteen tunnusnumero
+     * @example
+     * <pre name="test">
+     *  Tuotteet tuotteet = new Tuotteet();
+     *  Tuote mopo = new Tuote(), mopo2 = new Tuote(), mopo3 = new Tuote();
+     *  mopo.rekisteroi(); mopo2.rekisteroi();mopo3.rekisteroi();
+     *  tuotteet.lisaa(mopo); tuotteet.lisaa(mopo2); tuotteet.lisaa(mopo3);
+     *  tuotteet.getLkm() === 3;
+     *  tuotteet.poista(1);
+     *  tuotteet.getLkm() === 2;
+     * </pre>
+     */
+    public void poista(int id) {
+        if (id < 0) return;
+        int j = 0;
+            for (int i = 0; i < lkm; i++, j++) {
+                if (alkiot[i].getTunnusNro() == id) {
+                    muutettu = true;
+                    j++;
+                }
+                alkiot[i] = alkiot[j]; 
+            }
+            lkm--;
+            alkiot[lkm] = null;
+            return;
+    }
+    
+    /**
      * Palauttaa viitteen indeksin i tuotteeseen 
      * @param i monennenko tuotteen viite halutaan
      * @return viite tuotteeseen, joka indeksi on i

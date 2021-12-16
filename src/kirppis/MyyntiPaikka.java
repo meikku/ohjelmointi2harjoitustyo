@@ -30,6 +30,13 @@ public class MyyntiPaikka {
        tuotteet.lisaa(tuote);
     }
     
+    /**
+     * Poistetaan tuote tuotteet-taulukosta
+     * @param tuote tuote joka poistetaan
+     */
+    public void poista(Tuote tuote) {
+        tuotteet.poista(tuote.getTunnusNro());
+    }
 
     /**
      * @param tuote joka korvaa vanhan tai lisätään uutena

@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import kirppis.Tuote;
+import kirppis.MyyntiPaikka;
 
 /**
  * @author meikk
@@ -48,7 +49,7 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
     }
     
     @FXML private void handlePoistaTuote() {
-        ModalController.closeStage(labelVirhe);
+        poistaTuote();
     }
     
     @FXML private void handleOK() {
@@ -68,15 +69,22 @@ public class TuoteDialogController implements ModalControllerInterface<Tuote>, I
 
     private Tuote tuoteKohdalla;
     private TextField[] edits;
+    private MyyntiPaikka myyntiPaikka;
     
     private void alusta() {
         edits = new TextField[] { editNimi, editHinta, editKunto, editKuvaus };
         int i = 0;
-        // editNimi.setOnKeyReleased(e -> kasitteleNimi(editNimi)); Jos tehtäisiin erikseenkin
         for (TextField edit : edits) {
             final int k = ++i;
             edit.setOnKeyReleased( e -> kasitteleMuutosTuotteeseen(k, edit));
         }
+        myyntiPaikka = new MyyntiPaikka();
+    }
+    
+    private void poistaTuote() {
+       if (tuoteKohdalla == null) return;
+       myyntiPaikka.poista(tuoteKohdalla);
+       ModalController.closeStage(labelVirhe);
     }
     
     private void naytaVirhe(String virhe) {

@@ -45,6 +45,10 @@ public class HaksannaGUIController implements Initializable{
     @FXML void handleLisaaTuote() {
         lisaaTuote();
     }
+    
+    @FXML void handlePoistaTuote() {
+        poistaTuote();
+    }
     @FXML void handleRaportti() {
         naytaRaportti();
     }
@@ -71,8 +75,7 @@ public class HaksannaGUIController implements Initializable{
         avaa();
     }
     
-    @FXML
-    void handleTallenna() {
+    @FXML void handleTallenna() {
         tallenna();
     }
 
@@ -132,6 +135,14 @@ public class HaksannaGUIController implements Initializable{
         }
     }
     
+    private void poistaTuote() {
+        Tuote tuote = tuoteKohdalla;
+        if (tuote == null) return;
+        myyntiPaikka.poista(tuote);
+        int index = chooserTuotteet.getSelectedIndex();
+        hae(0);
+        chooserTuotteet.setSelectedIndex(index);
+    }
     private void muokkaaKategoria() {
 
         if (katKohdalla == null) return;
