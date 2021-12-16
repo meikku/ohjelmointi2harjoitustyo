@@ -5,6 +5,7 @@ package kirppis;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Comparator;
 
 import fi.jyu.mit.ohj2.Mjonot;
 
@@ -34,6 +35,19 @@ public class Tuote implements Cloneable{
     private String kuvaus = "";
 
     private static int seuraavaNro = 1;
+    
+    /**
+     * Luokka joka osaa verrata kahta tuotetta keskenään
+     *
+     */
+    public static class Vertailija implements Comparator<Tuote> {
+
+        @Override
+        public int compare(Tuote tuote1, Tuote tuote2) {
+            return tuote1.getNimi().compareTo(tuote2.getNimi());
+        }
+        
+    }
 
     /**
      * Tulostetaan tuotteen tiedot

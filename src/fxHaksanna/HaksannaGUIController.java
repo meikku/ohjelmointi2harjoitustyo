@@ -2,6 +2,7 @@ package fxHaksanna;
 
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -260,7 +261,7 @@ public class HaksannaGUIController implements Initializable{
         }
         
         else {
-            Tuote[] loydetyt = myyntiPaikka.etsi(ehto);
+            Collection<Tuote> loydetyt = myyntiPaikka.etsi(ehto);
             for (Tuote tuote : loydetyt) {
                 chooserTuotteet.add(tuote.getNimi(), tuote);
             }

@@ -95,7 +95,7 @@ public class MyyntiPaikka {
      * @param s hakuehto jolla etsitään
      * @return lista tuotteista jotka vastaavat hakuehtoa
      */
-    public Tuote[] etsi(String s) {
+    public Collection<Tuote> etsi(String s) {
        return tuotteet.etsi(s);
     }
 

@@ -8,7 +8,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -135,17 +139,15 @@ public class Tuotteet implements Cloneable{
      * @param s hakuehto jolla etsitään
      * @return lista tuotteista, jotka vastaavat hakuehtoa
      */
-    public Tuote[] etsi(String s) {
-        Tuote[] loydetyt = new Tuote[lkm];
-        int index = 0;
+    public Collection<Tuote> etsi(String s) {
+        List<Tuote> loydetyt = new ArrayList<Tuote>();
         for (int i = 0; i <lkm; i++) {
             if (alkiot[i].getNimi().contains(s)) {
-                loydetyt[index] = alkiot[i];
-                index++;
+                loydetyt.add(alkiot[i]);
             }
                 
         }
-        
+        Collections.sort(loydetyt, new Tuote.Vertailija());
         return loydetyt;
     }
     
