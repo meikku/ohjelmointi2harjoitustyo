@@ -131,6 +131,23 @@ public class Tuotteet implements Cloneable{
         return lkm;
     }
     
+    /**
+     * @param s hakuehto jolla etsitään
+     * @return lista tuotteista, jotka vastaavat hakuehtoa
+     */
+    public Tuote[] etsi(String s) {
+        Tuote[] loydetyt = new Tuote[lkm];
+        int index = 0;
+        for (int i = 0; i <lkm; i++) {
+            if (alkiot[i].getNimi().contains(s)) {
+                loydetyt[index] = alkiot[i];
+                index++;
+            }
+                
+        }
+        
+        return loydetyt;
+    }
     
     /**
      * Tallentaa tuotteet tiedostoon

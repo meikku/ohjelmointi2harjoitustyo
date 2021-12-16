@@ -91,6 +91,13 @@ public class MyyntiPaikka {
         return tuotteet.anna(i);
     }
     
+    /**
+     * @param s hakuehto jolla etsitään
+     * @return lista tuotteista jotka vastaavat hakuehtoa
+     */
+    public Tuote[] etsi(String s) {
+       return tuotteet.etsi(s);
+    }
 
     /**
      * Antaa myyntipaikan i:nnen kategorian

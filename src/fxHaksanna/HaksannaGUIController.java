@@ -260,15 +260,14 @@ public class HaksannaGUIController implements Initializable{
         }
         
         else {
-            for (int i = 0; i <myyntiPaikka.getTuotteet(); i++) {
-                Tuote tuote = myyntiPaikka.annaTuote(i);
-                if (tuote.getNimi().contains(ehto)) {
-                    chooserTuotteet.add(tuote.getNimi(), tuote);
-                }
+            Tuote[] loydetyt = myyntiPaikka.etsi(ehto);
+            for (Tuote tuote : loydetyt) {
+                chooserTuotteet.add(tuote.getNimi(), tuote);
             }
+            
         }
         
-        chooserTuotteet.setSelectedIndex(index); // tästä tulee muutosviesti
+        chooserTuotteet.setSelectedIndex(index); 
     }
 
     
