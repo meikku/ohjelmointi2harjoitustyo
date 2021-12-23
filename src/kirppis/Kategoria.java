@@ -45,8 +45,7 @@ public class Kategoria implements Cloneable {
      * @param out tietovirta johon tulostetaan
      */
     public void tulosta(PrintStream out) {
-        out.println("Kategoria:  " + nimi);
-        out.println("Kuvaus: " + kuvaus);
+        out.println("-" + nimi + ": " + kuvaus + "\n");
     }
     
     /**

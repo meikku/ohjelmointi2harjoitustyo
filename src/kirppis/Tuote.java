@@ -159,10 +159,6 @@ public class Tuote implements Cloneable{
      * @return virheilmoitus, null jos ok
      */
     public String setHinta(String s) {
-//       if ( !s.matches("[0-9]*.[0-9]*") ) return "Anna hinta numeroina";
-//       hinta = s;
-//       return null;
-//    }
         String virhe ="";
         
         try {

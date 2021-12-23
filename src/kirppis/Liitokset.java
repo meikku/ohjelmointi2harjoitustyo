@@ -101,13 +101,6 @@ public class Liitokset {
      * Etsitään kategoriaan kuuluvat tuotteet
      * @param kat kategoria, jonka tuotteita etsitään
      * @return lista löytyneistä
-     * @example
-     * <pre name="test">
-     *  Kategoria kat = new Kategoria();
-     *  kat.taytaKatTiedoilla();
-     *  kat.rekisteroi;
-     *  annaTuotteet(kat) === 
-     * </pre>
      */
     public List<Liitos> annaTuotteet(Kategoria kat) {
         List<Liitos> loydetyt = new ArrayList<Liitos>();

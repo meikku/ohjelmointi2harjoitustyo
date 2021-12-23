@@ -33,6 +33,20 @@ public class MyyntiPaikka {
     /**
      * Poistetaan tuote tuotteet-taulukosta
      * @param tuote tuote joka poistetaan
+     * @example
+     * <pre name="test">
+     *  #THROWS SailoException
+     *  MyyntiPaikka kirppis = new MyyntiPaikka();
+     *  Tuote mopo = new Tuote();
+     *  kirppis.lisaa(mopo);
+     *  kirppis.getTuotteet() === 1;
+     *  Tuote mopo2 = new Tuote(); 
+     *  Tuote mopo3 = new Tuote();
+     *  kirppis.lisaa(mopo2);
+     *  kirppis.lisaa(mopo3);
+     *  kirppis.getTuotteet() === 3;
+     *  kirppis.annaTuote(1) === mopo2;
+     * </pre>
      */
     public void poista(Tuote tuote) {
         tuotteet.poista(tuote.getTunnusNro());
@@ -58,6 +72,14 @@ public class MyyntiPaikka {
      */
     public void korvaaTaiLisaaKat(Kategoria kat) {
         kategoriat.korvaaTaiLisaa(kat);
+    }
+    
+    /**
+     * Poistetaan kategoria taulukosta
+     * @param kat kategoria joka poistetaan
+     */
+    public void poistaKategoria(Kategoria kat) {
+        kategoriat.poista(kat);
     }
     
     /**

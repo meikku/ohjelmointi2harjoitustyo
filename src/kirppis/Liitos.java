@@ -44,6 +44,18 @@ public class Liitos {
      * Lisätään uuden tuotteen & kategorian tunnusnumerot
      * @param tuote tuote joka lisätään
      * @param kat kategoria johon tuote kuuluu
+     * @example
+     * <pre name="test">
+     * Liitos liitos = new Liitos();
+     * liitos.rekisteroi(4, 6);
+     * liitos.getYhdysNro() === 1;
+     * liitos.getTuoteNro() === 4;
+     * liitos.getKatNro() === 6; 
+     * Liitos liitos2 = new Liitos();
+     * liitos2.rekisteroi(2, 5);
+     * liitos.toString() === "1|4|6";
+     * liitos2.toString() === "2|2|5";
+     * </pre>
      */
     public void rekisteroi(int tuote, int kat) {
         this.yhdysNro = seuraavaNro;

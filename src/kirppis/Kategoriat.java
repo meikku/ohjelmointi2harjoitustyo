@@ -34,6 +34,17 @@ public class Kategoriat {
     /**
      * Lisätään kategoria listalle
      * @param kat kategoria joka lisätään
+     * @example
+     * #import java.util.ArrayList;
+     * #import java.util.Collection;
+     * <pre name="test">
+     *  Collection<Kategoria> alkiot = new ArrayList<Kategoria>();  
+     *  Kategoria puutarha = new Kategoria(); 
+     *  Kategoria puutarha2 = new Kategoria(); 
+     *  Kategoria puutarha3 = new Kategoria();
+     *  alkiot.add(puutarha); alkiot.add(puutarha2); alkiot.add(puutarha3);
+     *  alkiot.size() === 3; 
+     * </pre>
      */
     public void lisaa(Kategoria kat) {
         alkiot.add(kat);
@@ -52,6 +63,17 @@ public class Kategoriat {
             }
         }
         lisaa(kat);
+    }
+    
+    /**
+     * Poistetaan kategoria taulukosta
+     * @param kat kategoria joka poistetaan
+     */
+    public void poista(Kategoria kat) {
+        if (kat == null) return;
+        alkiot.remove(kat);
+        muutettu = true;
+        return;
     }
     
     /**
